@@ -8,5 +8,6 @@
 #define SETTING_NAME_MAX		9
 #define SETTING_MAX		992
 #define PROMPT_MAX		SETTING_MAX
+#define VERSION			"1.0"
 
 #endif
