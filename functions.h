@@ -14,4 +14,8 @@ void
 CommandLine
 (void);
 
+int
+CommandProcess
+(const char*);
+
 #endif
