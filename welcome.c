@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-/* Header file */
+/* Header files */
 #include "macros.h"
 #include "extern.h"
 
