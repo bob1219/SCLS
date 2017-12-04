@@ -18,4 +18,8 @@ int
 CommandProcess
 (const char*);
 
+int
+log
+(char, const char*, ...);
+
 #endif
