@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* Header files */
 #include "macros.h"
@@ -23,6 +24,9 @@ CommandLine
 			fprintf(stderr, "Failed input.\n");
 			abort();
 		}
+		if(command[strlen(command) - 1] == '\n')
+			command[strlen(command) - 1] = '\0';
+		else while(getchar() != '\n');
 		
 		if(!CommandProcess(command))printf("succeeded.\n");
 		else fprintf(stderr, "failed.\n");
