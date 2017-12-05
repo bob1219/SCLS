@@ -20,8 +20,8 @@ const char	*format, ...)
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	sprintf(path, ".%clogs%c%u-%u-%u_%u:%u:%u", PATH_BREAK_CHARACTER, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_day,
-		local -> tm_year + 1900, local -> tm_hour, local -> tm_min, local -> tm_sec);
+	sprintf(path, ".%clogs%c%u-%u-%u.log", PATH_BREAK_CHARACTER, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_day,
+		local -> tm_year + 1900);
 	
 	/* Open file */
 	switch(mode)
