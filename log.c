@@ -35,10 +35,15 @@ const char	*format, ...)
 		break;
 		
 	default:
+		fprintf(stderr, "Error: Cannot write the log.\n");
 		return 1;
 	}
 	
-	if(!FilePointer)return 1;
+	if(!FilePointer)
+	{
+		fprintf(stderr, "Error: Cannot write the log.\n");
+		return 1;
+	}
 	
 	fprintf(FilePointer, "[%u/%u/%u %u:%u:%u]", local -> tm_mon + 1, local -> tm_day, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
 		local -> tm_sec);
