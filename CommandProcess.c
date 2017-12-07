@@ -27,63 +27,71 @@ CommandProcess
 	
 	if(!strcmp(commands[0], "mdir"))
 	{
+		if(a < 2)goto mdir_error;
+		
 		if(!mkdir(commands[1]))
 		{
 			if(WriteLog)
 				log('a', "Made a file \"%s\".\n", commands[1]);
 			return 0;
 		}
-		else
-		{
-			if(WriteLog)
-				log('a', "Failed make a file \"%s\".\n", commands[1]);
-			return 1;
-		}
+		else goto mdir_error;
+		
+	mdir_error:;
+		if(WriteLog)
+			log('a', "Failed make a file \"%s\".\n", commands[1]);
+		return 1;
 	}
 	else if(!strcmp(commands[0], "rmdir"))
 	{
+		if(a < 2)goto rmdir_error;
+		
 		if(!rmdir(commands[1]))
 		{
 			if(WriteLog)
 				log('a', "Removed a directory \"%s\".\n", commands[1]);
 			return 0;
 		}
-		else
-		{
-			if(WriteLog)
-				log('a', "Failed remove a file \"%s\".\n", commands[1]);
-			return 1;
-		}
+		else goto rmdir_error;
+		
+	rmdir_error:;
+		if(WriteLog)
+			log('a', "Failed remove a file \"%s\".\n", commands[1]);
+		return 1;
 	}
 	else if(!strcmp(commands[0], "rename"))
 	{
+		if(a < 3)goto rename_error;
+		
 		if(!rename(commands[1], commands[2]))
 		{
 			if(WriteLog)
 				log('a', "Renamed a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
 			return 0;
 		}
-		else
-		{
-			if(WriteLog)
-				log('a', "Failed rename a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
-			return 1;
-		}
+		else goto rename_error;
+		
+	rename_error:;
+		if(WriteLog)
+			log('a', "Failed rename a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+		return 1;
 	}
 	else if(!strcmp(commands[0], "chdir"))
 	{
+		if(a < 2)goto chdir_error;
+		
 		if(!chdir(commands[1]))
 		{
 			if(WriteLog)
 				log('a', "Changed current directory \"%s\".\n", commands[1]);
 			return 0;
 		}
-		else
-		{
-			if(WriteLog)
-				log('a', "Failed change current directory \"%s\".\n", commands[1]);
-			return 1;
-		}
+		else goto chdir_error;
+		
+	chdir_error:;
+		if(WriteLog)
+			log('a', "Failed change current directory \"%s\".\n", commands[1]);
+		return 1;
 	}
 	else if(!strcmp(commands[0], "cudir"))
 	{
@@ -108,13 +116,10 @@ CommandProcess
 	{
 		FILE	*FilePointer;
 		
+		if(a < 2)return 1;
+		
 		FilePointer = fopen(commands[1], "w");
-		if(!FilePointer)
-		{
-			if(WriteLog)
-				log('a', "Failed make a file \"%s\".\n", commands[1]);
-			return 1;
-		}
+		if(!FilePointer)goto mkfile_error;
 		else
 		{
 			/* Close file */
@@ -124,32 +129,41 @@ CommandProcess
 				log('a', "Made a file \"%s\".\n", commands[1]);
 			return 0;
 		}
+		
+	mkfile_error:;
+		if(WriteLog)
+			log('a', "Failed make a file \"%s\".\n", commands[1]);
+		return 1;
 	}
 	else if(!strcmp(commands[0], "rmfile"))
 	{
+		if(a < 2)goto rmfile_error;
+		
 		if(!remove(commands[1]))
 		{
 			if(WriteLog)
 				log('a', "Removed a file \"%s\".\n", commands[1]);
 			return 0;
 		}
-		else
-		{
-			if(WriteLog)
-				log('a', "Failed remove a file \"%s\".\n", commands[1]);
-			return 0;
-		}
+		else goto rmfile_error;
+		
+	rmfile_error:;
+		if(WriteLog)
+			log('a', "Failed remove a file \"%s\".\n", commands[1]);
+		return 0;
 	}
 	else if(!strcmp(commands[0], "cpfile"))
 	{
 		FILE		*FromFilePointer, *ToFilePointer;
 		BYTE		b;
 		
+		if(a < 3)goto cpfile_error;
+		
 		/* Open file */
 		FromFilePointer	= fopen(commands[1], "rb");
 		ToFilePointer		= fopen(commands[2], "wb");
 		if((!FromFilePointer) || (!ToFilePointer))
-			goto error;
+			goto cpfile_error;
 		
 		while(1)
 		{
@@ -165,9 +179,35 @@ CommandProcess
 			log('a', "Copied file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
 		return 0;
 		
-	error:;
+	cpfile_error:;
 		if(WriteLog)
 			log('a', "Failed copy file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+		return 1;
+	}
+	else if(!strcmp(commands[0], "lfile"))
+	{
+		DIR			*DirectoryPointer;
+		struct dirent	*directory;
+		
+		if(a < 2)goto lfile_error;
+		
+		/* Open directory */
+		DirectoryPointer = opendir(commands[1]);
+		if(!DirectoryPointer)return 1;
+		
+		while(directory = readdir(DirectoryPointer))
+			printf("%s\n", directory -> d_name);
+		
+		/* Close directory */
+		closedir(DirectoryPointer);
+		
+		if(WriteLog)
+			log('a', "Printed list of file in directory \"%s\".\n", commands[1]);
+		return 0;
+		
+	lfile_error:;
+		if(WriteLog)
+			log('a', "Failed print list of file in directory \"%s\".\n", commands[1]);
 		return 1;
 	}
 }
