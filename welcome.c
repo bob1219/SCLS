@@ -14,8 +14,5 @@ welcome
 	printf("Welcome to the SCLS version %s.\n", VERSION);
 	
 	if(WriteLog)
-	{
-		if(log('w', "SCLS version %s\n", VERSION))
-			fprintf(stderr, "Error: Cannot write the log.\n");
-	}
+		log('w', "SCLS version %s\n", VERSION);
 }
