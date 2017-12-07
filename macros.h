@@ -10,5 +10,6 @@
 #define PROMPT_MAX		SETTING_MAX
 #define VERSION			"1.0"
 #define COMMAND_MAX		50
+#define COMMAND_NUMBER_MAX	11
 
 #endif
