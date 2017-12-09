@@ -284,4 +284,9 @@ CommandProcess
 			log('a', "Failed print contents of a file \"%s\" in binary mode.\n", commands[1]);
 		return 1;
 	}
+	else if(!strcmp(commands[0], "version"))
+	{
+		printf("SCLS version %s\n", VERSION);
+		return 0;
+	}
 }
