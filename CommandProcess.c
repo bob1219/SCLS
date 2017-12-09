@@ -364,4 +364,6 @@ CommandProcess
 		
 		return 0;
 	}
+	else if(!strcmp(commands[0], "exit"))
+		exit(EXIT_SUCCESS);
 }
