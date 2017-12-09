@@ -233,4 +233,28 @@ CommandProcess
 			log('a', "Failed print list of file in directory \"%s\".\n", commands[1]);
 		return 1;
 	}
+	else if(!strcmp(commands[0], "tview"))
+	{
+		FILE	*FilePointer;
+		char	FileLine[FILE_LINE_MAX];
+		
+		/* Open file */
+		FilePointer = fopen(commands[1], "r");
+		if(!FilePointer)goto tview_error;
+		
+		for(unsigned int a = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; a++)
+			printf("%u:\t%s", a, FileLine);
+		
+		/* Close file */
+		fclose(FilePointer);
+		
+		if(WriteLog)
+			log('a', "Printed contents of file \"%s\".\n", commands[1]);
+		return 0;
+		
+	tview_error:;
+		if(WriteLog)
+			log('a', "Failed print contents of file \"%s\".\n"), commands[1]);
+		return 1;
+	}
 }
