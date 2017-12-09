@@ -4,6 +4,8 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <time.h>
 
 /* Header files */
 #include "macros.h"
@@ -324,5 +326,17 @@ CommandProcess
 		if(WriteLog)
 			log('a', "Failed execution a software \"%s\".\n", commands[1]);
 		return 1;
+	}
+	else if(!strcmp(commands[0], "date"))
+	{
+		time_t	timer;
+		struct tm	*local;
+		
+		timer = time(NULL);
+		local = localtime(&timer);
+		
+		printf("%u/%u/%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900);
+		
+		return 0;
 	}
 }
