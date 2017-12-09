@@ -289,4 +289,40 @@ CommandProcess
 		printf("SCLS version %s\n", VERSION);
 		return 0;
 	}
+	else if(!strcmp(commands[0], "app"))
+	{
+		char	*cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
+		
+		if(!system(NULL))goto app_error;
+		
+		if(!cmd)goto app_error;
+		
+		for(unsigned int i = 1 ; i <= a ; i++)
+		{
+			if((strlen(cmd) + 1 + strlen(commands[i]) + 1) > COMMAND_MAX)
+			{
+				char	*temp;
+				
+				temp = (char*)realloc(cmd, strlen(cmd) + 1 + strlen(commands[i]) + 1);
+				if(!temp)goto app_error;
+				cmd = temp;
+			}
+			
+			sprintf(cmd, "%s %s", cmd, command[i]);
+		}
+		
+		system(cmd);
+		
+		/* Free memory */
+		free(cmd);
+		
+		if(WriteLog)
+			log('a', "Executed a software \"%s\".\n", commands[1]);
+		return 0;
+		
+	app_error:;
+		if(WriteLog)
+			log('a', "Failed execution a software \"%s\".\n", commands[1]);
+		return 1;
+	}
 }
