@@ -339,4 +339,16 @@ CommandProcess
 		
 		return 0;
 	}
+	else if(!strcmp(commands[0], "time"))
+	{
+		time_t	timer;
+		struct tm	*local;
+		
+		timer = time(NULL);
+		local = localtime(&timer);
+		
+		printf("%u:%u:%u\n", local -> tm_hour, local -> tm_min, local -> tm_sec);
+		
+		return 0;
+	}
 }
