@@ -6,10 +6,41 @@
 /* Header file */
 #include "macros.h"
 
+/*
+ * log
+ *
+ * [Description]
+ * Write the log
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	mode
+ *	type:			char
+ *	description:	Mode of file open
+ *
+ * -	format
+ *	type:			const char*
+ *	description:	format of vfprintf
+ *
+ * [Call from]
+ * welcome function
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
 int
 log
-(char			mode,
-const char	*format, ...)
+(
+char			mode,
+const char	*format,
+...
+)
 {
 	time_t	timer;
 	struct tm	*local;

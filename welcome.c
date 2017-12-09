@@ -7,6 +7,25 @@
 #include "extern.h"
 #include "functions.h"
 
+/*
+ * welcome
+ *
+ * [Description]
+ * Print welcome message
+ *
+ * [Return value]
+ * Nothing
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * main function
+ *
+ * [Call to]
+ * log function
+ */
+
 void
 welcome
 (void)

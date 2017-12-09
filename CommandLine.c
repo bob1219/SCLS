@@ -8,6 +8,25 @@
 #include "macros.h"
 #include "extern.h"
 
+/*
+ * CommandLine
+ *
+ * [Description]
+ * Input command from standard-input
+ *
+ * [Return value]
+ * Nothing
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * main function
+ *
+ * [Call to]
+ * CommandProcess function
+ */
+
 _Noreturn
 void
 CommandLine

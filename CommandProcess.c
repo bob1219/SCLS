@@ -10,6 +10,29 @@
 #include "extern.h"
 #include "typedef.h"
 
+/*
+ * CommandProcess
+ *
+ * [Description]
+ * Process a command
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	command
+ *	type:			const char*
+ *	description:	command
+ *
+ * [Call from]
+ * CommandLine function
+ *
+ * [Call to]
+ * Nothing
+ */
+
 int
 CommandProcess
 (const char *command)

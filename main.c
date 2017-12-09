@@ -5,10 +5,30 @@
 /* Header file */
 #include "functions.h"
 
+/*
+ * main
+ *
+ * [Description]
+ * Nothing
+ *
+ * [Return value]
+ * type: int
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * Operating System
+ *
+ * [Call to]
+ * prepering function
+ * welcome function
+ * CommandLine function
+ */
+
 int
 main
-(int	argc,
-char	**argv)
+(void)
 {
 	if(!prepering())
 	{

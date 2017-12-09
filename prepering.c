@@ -7,6 +7,27 @@
 /* Header file */
 #include "macros.h"
 
+/*
+ * prepering
+ *
+ * [Description]
+ * Prepering SCLS
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * main function
+ *
+ * [Call to]
+ * Nothing
+ */
+
 int
 prepering
 (void)
