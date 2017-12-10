@@ -11,6 +11,7 @@
 #include "macros.h"
 #include "extern.h"
 #include "typedef.h"
+#include "functions.h"
 
 /*
  * CommandProcess
@@ -51,22 +52,7 @@ CommandProcess
 	a--;
 	
 	if(!strcmp(commands[0], "mdir"))
-	{
-		if(a < 2)goto mdir_error;
-		
-		if(!mkdir(commands[1]))
-		{
-			if(WriteLog)
-				log('a', "Made a file \"%s\".\n", commands[1]);
-			return 0;
-		}
-		else goto mdir_error;
-		
-	mdir_error:;
-		if(WriteLog)
-			log('a', "Failed make a file \"%s\".\n", commands[1]);
-		return 1;
-	}
+		return command_mdir(a, commands);
 	else if(!strcmp(commands[0], "rmdir"))
 	{
 		if(a < 2)goto rmdir_error;
