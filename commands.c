@@ -20,7 +20,7 @@
  * [Arguments]
  * -	a
  *	type:			unsigned int
- *	description:	Max of command
+ *	description:	Number of command
  *
  * -	commands
  *	type:			const char**
@@ -70,7 +70,7 @@ mdir_error:;
  * [Arguments]
  * -	a
  *	type:			unsigned int
- *	description:	Max of command
+ *	description:	Number of command
  *
  * -	commands
  *	type:			const char**
@@ -120,7 +120,7 @@ rmdir_error:;
  * [Arguments]
  * -	a
  *	type:			unsigned int
- *	description:	Max of command
+ *	description:	Number of command
  *
  * -	commands
  *	type:			const char**
@@ -153,5 +153,55 @@ const char	**commands
 rename_error:;
 	if(WriteLog)
 		log('a', "Failed rename a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+	return 1;
+}
+
+/*
+ * command_chdir
+ *
+ * [Description]
+ * Change current directory
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_chdir
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	if(a < 2)goto chdir_error;
+	
+	if(!chdir(commands[1]))
+	{
+		if(WriteLog)
+			log('a', "Changed current directory \"%s\".\n", commands[1]);
+		return 0;
+	}
+	else goto chdir_error;
+	
+chdir_error:;
+	if(WriteLog)
+		log('a', "Failed change current directory \"%s\".\n", commands[1]);
 	return 1;
 }

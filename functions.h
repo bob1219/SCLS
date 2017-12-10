@@ -47,4 +47,11 @@ unsigned int,
 const char**
 );
 
+int
+command_chdir
+(
+unsigned int,
+const char**
+);
+
 #endif

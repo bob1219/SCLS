@@ -58,22 +58,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "rename"))
 		return command_rename(a, commands);
 	else if(!strcmp(commands[0], "chdir"))
-	{
-		if(a < 2)goto chdir_error;
-		
-		if(!chdir(commands[1]))
-		{
-			if(WriteLog)
-				log('a', "Changed current directory \"%s\".\n", commands[1]);
-			return 0;
-		}
-		else goto chdir_error;
-		
-	chdir_error:;
-		if(WriteLog)
-			log('a', "Failed change current directory \"%s\".\n", commands[1]);
-		return 1;
-	}
+		return command_chdir(a, commands);
 	else if(!strcmp(commands[0], "cudir"))
 	{
 		char	CurrentDirectory[FILENAME_MAX];
