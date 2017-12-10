@@ -356,3 +356,68 @@ rmfile_error:;
 		log('a', "Failed remove a file \"%s\".\n", commands[1]);
 	return 1;
 }
+
+/*
+ * command_cpfile
+ *
+ * [Description]
+ * Copy a file
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_cpfile
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	FILE		*FromFilePointer, *ToFilePointer;
+	BYTE		b;
+	
+	if(a < 3)goto cpfile_error;
+	
+	/* Open file */
+	FromFilePointer	= fopen(commands[1], "rb");
+	ToFilePointer		= fopen(commands[2], "wb");
+	if((!FromFilePointer) || (!ToFilePointer))
+		goto cpfile_error;
+	
+	while(1)
+	{
+		if(fread(&b, sizeof(BYTE), 1, FromFilePointer) != 1)break;
+		if(fwrite(&b, sizeof(BYTE), 1, ToFilePointer) != 1)break;
+	}
+	
+	/* Close file */
+	fclose(FromFilePointer);
+	fclose(ToFilePointer);
+	
+	if(WriteLog)
+		log('a', "Copied file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+	return 0;
+	
+cpfile_error:;
+	if(WriteLog)
+		log('a', "Failed copy file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+	return 1;
+}

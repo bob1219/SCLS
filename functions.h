@@ -72,4 +72,11 @@ unsigned int,
 const char**
 );
 
+int
+command_cpfile
+(
+unsigned int,
+const char**
+);
+
 #endif

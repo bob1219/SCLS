@@ -66,37 +66,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "rmfile"))
 		return command_rmfile(a, commands);
 	else if(!strcmp(commands[0], "cpfile"))
-	{
-		FILE		*FromFilePointer, *ToFilePointer;
-		BYTE		b;
-		
-		if(a < 3)goto cpfile_error;
-		
-		/* Open file */
-		FromFilePointer	= fopen(commands[1], "rb");
-		ToFilePointer		= fopen(commands[2], "wb");
-		if((!FromFilePointer) || (!ToFilePointer))
-			goto cpfile_error;
-		
-		while(1)
-		{
-			if(fread(&b, sizeof(BYTE), 1, FromFilePointer) != 1)break;
-			if(fwrite(&b, sizeof(BYTE), 1, ToFilePointer) != 1)break;
-		}
-		
-		/* Close file */
-		fclose(FromFilePointer);
-		fclose(ToFilePointer);
-		
-		if(WriteLog)
-			log('a', "Copied file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
-		return 0;
-		
-	cpfile_error:;
-		if(WriteLog)
-			log('a', "Failed copy file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
-		return 1;
-	}
+		return command_cpfile(a, commands);
 	else if(!strcmp(commands[0], "lfile"))
 	{
 		DIR			*DirectoryPointer;
