@@ -56,22 +56,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "rmdir"))
 		return command_rmdir(a, commands);
 	else if(!strcmp(commands[0], "rename"))
-	{
-		if(a < 3)goto rename_error;
-		
-		if(!rename(commands[1], commands[2]))
-		{
-			if(WriteLog)
-				log('a', "Renamed a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
-			return 0;
-		}
-		else goto rename_error;
-		
-	rename_error:;
-		if(WriteLog)
-			log('a', "Failed rename a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
-		return 1;
-	}
+		return command_rename(a, commands);
 	else if(!strcmp(commands[0], "chdir"))
 	{
 		if(a < 2)goto chdir_error;

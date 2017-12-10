@@ -40,4 +40,11 @@ unsigned int,
 const char**
 );
 
+int
+command_rename
+(
+unsigned int,
+const char**
+);
+
 #endif
