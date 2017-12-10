@@ -72,32 +72,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "tview"))
 		return command_tview(a, commands);
 	else if(!strcmp(commands[0], "bview"))
-	{
-		FILE		*FilePointer;
-		BYTE		b;
-		
-		/* Open file */
-		FilePointer = fopen(commands[1], "r");
-		if(!FilePointer)goto bview_error;
-		
-		for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
-		{
-			if(a != 1)putchar('-');
-			printf("%x", b);
-		}
-		
-		/* Close file */
-		fclose(FilePointer);
-		
-		if(WriteLog)
-			log('a', "Printed contents of a file \"%s\" in binary mode.\n", commands[1]);
-		return 0;
-		
-	bview_error:;
-		if(WriteLog)
-			log('a', "Failed print contents of a file \"%s\" in binary mode.\n", commands[1]);
-		return 1;
-	}
+		return command_bview(a, commands);
 	else if(!strcmp(commands[0], "version"))
 	{
 		printf("SCLS version %s\n", VERSION);

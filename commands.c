@@ -370,7 +370,7 @@ rmfile_error:;
  *
  * [Arguments]
  * -	a
- *	type:			int
+ *	type:			unsigned int
  *	description:	Number of command
  *
  * -	commands
@@ -489,16 +489,16 @@ lfile_error:;
  *
  * [Return value]
  * type:		int
- * success:		0
+ * success:	0
  * failure:		1
  *
  * [Arguments]
  * -	a
- *	type:			unsigned int
+ *	type:		unsigned int
  *	description:	Number of command
  *
  * -	commands
- *	type:			const char**
+ *	type:		const char**
  *	description:	commands
  *
  * [Call from]
@@ -537,5 +537,67 @@ const char	**commands
 tview_error:;
 	if(WriteLog)
 		log('a', "Failed print contents of a file \"%s\" in text mode.\n"), commands[1]);
+	return 1;
+}
+
+/*
+ * command_bview
+ *
+ * [Description]
+ * Print list of in current directory
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_bview
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	FILE		*FilePointer;
+	BYTE	b;
+	
+	if(a < 1)goto bview_error;
+	
+	/* Open file */
+	FilePointer = fopen(commands[1], "r");
+	if(!FilePointer)goto bview_error;
+	
+	for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
+	{
+		if(a != 1)putchar('-');
+		printf("%x", b);
+	}
+	
+	/* Close file */
+	fclose(FilePointer);
+	
+	if(WriteLog)
+		log('a', "Printed contents of a file \"%s\" in binary mode.\n", commands[1]);
+	return 0;
+	
+bview_error:;
+	if(WriteLog)
+		log('a', "Failed print contents of a file \"%s\" in binary mode.\n", commands[1]);
 	return 1;
 }

@@ -93,4 +93,11 @@ unsigned int,
 const char**
 );
 
+int
+command_bview
+(
+unsigned int,
+const char**
+);
+
 #endif
