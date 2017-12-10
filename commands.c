@@ -700,3 +700,39 @@ app_error:;
 		log('a', "Failed execution a software \"%s\".\n", commands[1]);
 	return 1;
 }
+
+/*
+ * command_date
+ *
+ * [Description]
+ * Print current date
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
+int
+command_date
+(void)
+{
+	time_t	timer;
+	struct tm	*local;
+	
+	timer = time(NULL);
+	local = localtime(&timer);
+	
+	printf("%u/%u/%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900);
+	
+	return 0;
+}

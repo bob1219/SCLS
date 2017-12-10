@@ -111,4 +111,8 @@ unsigned int,
 const char**
 );
 
+int
+command_date
+(void);
+
 #endif

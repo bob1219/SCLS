@@ -78,17 +78,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "app"))
 		return command_app(a, commands);
 	else if(!strcmp(commands[0], "date"))
-	{
-		time_t	timer;
-		struct tm	*local;
-		
-		timer = time(NULL);
-		local = localtime(&timer);
-		
-		printf("%u/%u/%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900);
-		
-		return 0;
-	}
+		return command_date();
 	else if(!strcmp(commands[0], "time"))
 	{
 		time_t	timer;
