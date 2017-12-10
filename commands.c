@@ -2,6 +2,7 @@
 #include <direct.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <unistd.h>
 
 /* Header file */
 #include "extern.h"
@@ -204,4 +205,47 @@ chdir_error:;
 	if(WriteLog)
 		log('a', "Failed change current directory \"%s\".\n", commands[1]);
 	return 1;
+}
+
+/*
+ * command_cudir
+ *
+ * [Description]
+ * Print current directory
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_cudir
+(void)
+{
+	char	CurrentDirectory[FILENAME_MAX];
+	
+	if(!getcwd(CurrentDirectory, FILENAME_MAX))
+	{
+		printf("current directory: \"%s\"\n", CurrentDirectory);
+		
+		if(WriteLog)
+			log('a', "Current directory is \"%s\".\n", CurrentDirectory);
+		return 0;
+	}
+	else
+	{
+		if(WriteLog)
+			log('a', "Failed get current directory.\n");
+		return 1;
+	}
 }

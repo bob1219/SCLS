@@ -54,4 +54,8 @@ unsigned int,
 const char**
 );
 
+int
+command_cudir
+(void);
+
 #endif

@@ -60,24 +60,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "chdir"))
 		return command_chdir(a, commands);
 	else if(!strcmp(commands[0], "cudir"))
-	{
-		char	CurrentDirectory[FILENAME_MAX];
-		
-		if(!getcwd(CurrentDirectory, FILENAME_MAX))
-		{
-			printf("current directory: \"%s\"\n", CurrentDirectory);
-			
-			if(WriteLog)
-				log('a', "Current directory is \"%s\".\n", CurrentDirectory);
-			return 0;
-		}
-		else
-		{
-			if(WriteLog)
-				log('a', "Failed get current directory.\n");
-			return 1;
-		}
-	}
+		return command_cudir();
 	else if(!strcmp(commands[0], "mkfile"))
 	{
 		FILE	*FilePointer;
