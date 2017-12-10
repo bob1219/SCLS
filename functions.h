@@ -26,4 +26,11 @@ const char*,
 ...
 );
 
+int
+command_mdir
+(
+unsigned int,
+const char**
+);
+
 #endif
