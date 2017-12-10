@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
-/* Header file */
+/* Header files */
 #include "extern.h"
+#include "functions.h"
+#include "macros.h"
 
 /*
  * command_mdir
@@ -600,4 +602,32 @@ bview_error:;
 	if(WriteLog)
 		log('a', "Failed print contents of a file \"%s\" in binary mode.\n", commands[1]);
 	return 1;
+}
+
+/*
+ * command_version
+ *
+ * [Description]
+ * Print version of SCLS
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
+int
+command_version
+(void)
+{
+	printf("SCLS version %s\n", VERSION);
+	return 0;
 }

@@ -74,10 +74,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "bview"))
 		return command_bview(a, commands);
 	else if(!strcmp(commands[0], "version"))
-	{
-		printf("SCLS version %s\n", VERSION);
-		return 0;
-	}
+		return command_version();
 	else if(!strcmp(commands[0], "app"))
 	{
 		char	*cmd = (char*)calloc(COMMAND_MAX, sizeof(char));

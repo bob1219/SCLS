@@ -100,4 +100,8 @@ unsigned int,
 const char**
 );
 
+int
+command_version
+(void);
+
 #endif
