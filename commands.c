@@ -306,3 +306,53 @@ mkfile_error:;
 		log('a', "Failed make a file \"%s\".\n", commands[1]);
 	return 1;
 }
+
+/*
+ * command_rmfile
+ *
+ * [Description]
+ * Remove a file
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_rmfile
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	if(a < 2)goto rmfile_error;
+	
+	if(!remove(commands[1]))
+	{
+		if(WriteLog)
+			log('a', "Removed a file \"%s\".\n", commands[1]);
+		return 0;
+	}
+	else goto rmfile_error;
+	
+rmfile_error:;
+	if(WriteLog)
+		log('a', "Failed remove a file \"%s\".\n", commands[1]);
+	return 1;
+}

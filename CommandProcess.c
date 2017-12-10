@@ -64,22 +64,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "mkfile"))
 		return command_mkfile(a, commands);
 	else if(!strcmp(commands[0], "rmfile"))
-	{
-		if(a < 2)goto rmfile_error;
-		
-		if(!remove(commands[1]))
-		{
-			if(WriteLog)
-				log('a', "Removed a file \"%s\".\n", commands[1]);
-			return 0;
-		}
-		else goto rmfile_error;
-		
-	rmfile_error:;
-		if(WriteLog)
-			log('a', "Failed remove a file \"%s\".\n", commands[1]);
-		return 0;
-	}
+		return command_rmfile(a, commands);
 	else if(!strcmp(commands[0], "cpfile"))
 	{
 		FILE		*FromFilePointer, *ToFilePointer;

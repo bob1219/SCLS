@@ -65,4 +65,11 @@ unsigned int,
 const char**
 );
 
+int
+command_rmfile
+(
+unsigned int,
+const char**
+);
+
 #endif
