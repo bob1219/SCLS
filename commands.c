@@ -11,7 +11,7 @@
  * command_mdir
  *
  * [Description]
- * Make a file
+ * Make a directory
  *
  * [Return value]
  * type:		int
@@ -61,7 +61,7 @@ mdir_error:;
  * command_rmdir
  *
  * [Description]
- * Remove a file
+ * Remove a directory
  *
  * [Return value]
  * type:		int
@@ -111,7 +111,7 @@ rmdir_error:;
  * command_rename
  *
  * [Description]
- * Rename a file
+ * Rename a file or directory
  *
  * [Return value]
  * type:		int
@@ -248,4 +248,61 @@ command_cudir
 			log('a', "Failed get current directory.\n");
 		return 1;
 	}
+}
+
+/*
+ * command_mkfile
+ *
+ * [Description]
+ * Make a file
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_mkfile
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	FILE	*FilePointer;
+	
+	if(a < 2)return 1;
+	
+	/* Open file */
+	FilePointer = fopen(commands[1], "w");
+	if(!FilePointer)goto mkfile_error;
+	else
+	{
+		/* Close file */
+		fclose(FilePointer);
+		
+		if(WriteLog)
+			log('a', "Made a file \"%s\".\n", commands[1]);
+		return 0;
+	}
+	
+mkfile_error:;
+	if(WriteLog)
+		log('a', "Failed make a file \"%s\".\n", commands[1]);
+	return 1;
 }

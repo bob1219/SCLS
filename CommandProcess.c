@@ -62,28 +62,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "cudir"))
 		return command_cudir();
 	else if(!strcmp(commands[0], "mkfile"))
-	{
-		FILE	*FilePointer;
-		
-		if(a < 2)return 1;
-		
-		FilePointer = fopen(commands[1], "w");
-		if(!FilePointer)goto mkfile_error;
-		else
-		{
-			/* Close file */
-			fclose(FilePointer);
-			
-			if(WriteLog)
-				log('a', "Made a file \"%s\".\n", commands[1]);
-			return 0;
-		}
-		
-	mkfile_error:;
-		if(WriteLog)
-			log('a', "Failed make a file \"%s\".\n", commands[1]);
-		return 1;
-	}
+		return command_mkfile(a, commands);
 	else if(!strcmp(commands[0], "rmfile"))
 	{
 		if(a < 2)goto rmfile_error;

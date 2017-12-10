@@ -58,4 +58,11 @@ int
 command_cudir
 (void);
 
+int
+command_mkfile
+(
+unsigned int,
+const char**
+);
+
 #endif
