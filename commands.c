@@ -41,7 +41,7 @@ unsigned int	a,
 const char	**commands
 )
 {
-	if(a < 2)goto mdir_error;
+	if(a < 1)goto mdir_error;
 	
 	if(!mkdir(commands[1]))
 	{
@@ -91,7 +91,7 @@ unsigned int	a,
 const char	**commands
 )
 {
-	if(a < 2)goto rmdir_error;
+	if(a < 1)goto rmdir_error;
 	
 	if(!rmdir(commands[1]))
 	{
@@ -141,7 +141,7 @@ unsigned int	a,
 const char	**commands
 )
 {
-	if(a < 3)goto rename_error;
+	if(a < 2)goto rename_error;
 	
 	if(!rename(commands[1], commands[2]))
 	{
@@ -191,7 +191,7 @@ unsigned int	a,
 const char	**commands
 )
 {
-	if(a < 2)goto chdir_error;
+	if(a < 1)goto chdir_error;
 	
 	if(!chdir(commands[1]))
 	{
@@ -286,7 +286,7 @@ const char	**commands
 {
 	FILE	*FilePointer;
 	
-	if(a < 2)return 1;
+	if(a < 1)return 1;
 	
 	/* Open file */
 	FilePointer = fopen(commands[1], "w");
@@ -341,7 +341,7 @@ unsigned int	a,
 const char	**commands
 )
 {
-	if(a < 2)goto rmfile_error;
+	if(a < 1)goto rmfile_error;
 	
 	if(!remove(commands[1]))
 	{
@@ -394,7 +394,7 @@ const char	**commands
 	FILE		*FromFilePointer, *ToFilePointer;
 	BYTE		b;
 	
-	if(a < 3)goto cpfile_error;
+	if(a < 2)goto cpfile_error;
 	
 	/* Open file */
 	FromFilePointer	= fopen(commands[1], "rb");
@@ -459,7 +459,7 @@ const char	**commands
 	DIR			*DirectoryPointer;
 	struct dirent	*directory;
 	
-	if(a < 2)goto lfile_error;
+	if(a < 1)goto lfile_error;
 	
 	/* Open directory */
 	DirectoryPointer = opendir(commands[1]);
@@ -478,5 +478,64 @@ const char	**commands
 lfile_error:;
 	if(WriteLog)
 		log('a', "Failed print list of file in directory \"%s\".\n", commands[1]);
+	return 1;
+}
+
+/*
+ * command_tview
+ *
+ * [Description]
+ * Print contents of a text file
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_tview
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	FILE	*FilePointer;
+	char	FileLine[FILE_LINE_MAX];
+	
+	if(a < 1)goto tview_error;
+	
+	/* Open file */
+	FilePointer = fopen(commands[1], "r");
+	if(!FilePointer)goto tview_error;
+	
+	for(unsigned int a = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; a++)
+		printf("%u:\t%s", a, FileLine);
+	
+	/* Close file */
+	fclose(FilePointer);
+	
+	if(WriteLog)
+		log('a', "Printed contents of a file \"%s\" in text mode.\n", commands[1]);
+	return 0;
+	
+tview_error:;
+	if(WriteLog)
+		log('a', "Failed print contents of a file \"%s\" in text mode.\n"), commands[1]);
 	return 1;
 }

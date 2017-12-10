@@ -70,29 +70,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "lfile"))
 		return command_lfile(a, commands);
 	else if(!strcmp(commands[0], "tview"))
-	{
-		FILE	*FilePointer;
-		char	FileLine[FILE_LINE_MAX];
-		
-		/* Open file */
-		FilePointer = fopen(commands[1], "r");
-		if(!FilePointer)goto tview_error;
-		
-		for(unsigned int a = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; a++)
-			printf("%u:\t%s", a, FileLine);
-		
-		/* Close file */
-		fclose(FilePointer);
-		
-		if(WriteLog)
-			log('a', "Printed contents of a file \"%s\" in text mode.\n", commands[1]);
-		return 0;
-		
-	tview_error:;
-		if(WriteLog)
-			log('a', "Failed print contents of a file \"%s\" in text mode.\n"), commands[1]);
-		return 1;
-	}
+		return command_tview(a, commands);
 	else if(!strcmp(commands[0], "bview"))
 	{
 		FILE		*FilePointer;

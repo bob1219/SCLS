@@ -82,7 +82,14 @@ const char**
 int
 command_lfile
 (
-unsigned int
+unsigned int,
+const char**
+);
+
+int
+command_tview
+(
+unsigned int,
 const char**
 );
 
