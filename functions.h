@@ -104,4 +104,11 @@ int
 command_version
 (void);
 
+int
+command_app
+(
+unsigned int,
+const char**
+);
+
 #endif

@@ -631,3 +631,72 @@ command_version
 	printf("SCLS version %s\n", VERSION);
 	return 0;
 }
+
+/*
+ * command_app
+ *
+ * [Description]
+ * Execution a software
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_app
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	char	*cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
+	
+	if(!system(NULL))goto app_error;
+	
+	if(!cmd)goto app_error;
+	
+	for(unsigned int i = 1 ; i <= a ; i++)
+	{
+		if((strlen(cmd) + 1 + strlen(commands[i]) + 1) > COMMAND_MAX)
+		{
+			char	*temp;
+			
+			temp = (char*)realloc(cmd, strlen(cmd) + 1 + strlen(commands[i]) + 1);
+			if(!temp)goto app_error;
+			cmd = temp;
+		}
+		
+		sprintf(cmd, "%s %s", cmd, command[i]);
+	}
+	
+	system(cmd);
+	
+	/* Free memory */
+	free(cmd);
+	
+	if(WriteLog)
+		log('a', "Executed a software \"%s\".\n", commands[1]);
+	return 0;
+	
+app_error:;
+	if(WriteLog)
+		log('a', "Failed execution a software \"%s\".\n", commands[1]);
+	return 1;
+}
