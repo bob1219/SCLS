@@ -44,9 +44,9 @@ CommandProcess
 	unsigned int	a;
 	
 	strcpy(command2, command);
-	sprintf(format, "%%%us %%%u[^\0]", COMMAND_MAX, COMMAND_MAX);
+	sprintf(format, "%%%us %%%u[^\n]", COMMAND_MAX, COMMAND_MAX);
 	
-	for(a = 0 ; (a <= COMMAND_NUMBER_MAX) || (strcmp(command2, ";")) ; a++)
+	for(a = 0 ; (a <= COMMAND_NUMBER_MAX) || (strcmp(command2, "\n")) ; a++)
 		sscanf(command2, format, commands[a], command2);
 	
 	a--;
