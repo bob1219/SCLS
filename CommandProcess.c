@@ -54,22 +54,7 @@ CommandProcess
 	if(!strcmp(commands[0], "mdir"))
 		return command_mdir(a, commands);
 	else if(!strcmp(commands[0], "rmdir"))
-	{
-		if(a < 2)goto rmdir_error;
-		
-		if(!rmdir(commands[1]))
-		{
-			if(WriteLog)
-				log('a', "Removed a directory \"%s\".\n", commands[1]);
-			return 0;
-		}
-		else goto rmdir_error;
-		
-	rmdir_error:;
-		if(WriteLog)
-			log('a', "Failed remove a file \"%s\".\n", commands[1]);
-		return 1;
-	}
+		return command_rmdir(a, commands);
 	else if(!strcmp(commands[0], "rename"))
 	{
 		if(a < 3)goto rename_error;
