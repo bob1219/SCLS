@@ -79,4 +79,11 @@ unsigned int,
 const char**
 );
 
+int
+command_lfile
+(
+unsigned int
+const char**
+);
+
 #endif

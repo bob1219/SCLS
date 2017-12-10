@@ -68,31 +68,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "cpfile"))
 		return command_cpfile(a, commands);
 	else if(!strcmp(commands[0], "lfile"))
-	{
-		DIR			*DirectoryPointer;
-		struct dirent	*directory;
-		
-		if(a < 2)goto lfile_error;
-		
-		/* Open directory */
-		DirectoryPointer = opendir(commands[1]);
-		if(!DirectoryPointer)return 1;
-		
-		while(directory = readdir(DirectoryPointer))
-			printf("%s\n", directory -> d_name);
-		
-		/* Close directory */
-		closedir(DirectoryPointer);
-		
-		if(WriteLog)
-			log('a', "Printed list of file in directory \"%s\".\n", commands[1]);
-		return 0;
-		
-	lfile_error:;
-		if(WriteLog)
-			log('a', "Failed print list of file in directory \"%s\".\n", commands[1]);
-		return 1;
-	}
+		return command_lfile(a, commands);
 	else if(!strcmp(commands[0], "tview"))
 	{
 		FILE	*FilePointer;

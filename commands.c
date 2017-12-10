@@ -421,3 +421,62 @@ cpfile_error:;
 		log('a', "Failed copy file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
 	return 1;
 }
+
+/*
+ * command_lfile
+ *
+ * [Description]
+ * Print list of in current directory
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ * failure:		1
+ *
+ * [Arguments]
+ * -	a
+ *	type:			unsigned int
+ *	description:	Number of command
+ *
+ * -	commands
+ *	type:			const char**
+ *	description:	commands
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * log function
+ */
+
+int
+command_lfile
+(
+unsigned int	a,
+const char	**commands
+)
+{
+	DIR			*DirectoryPointer;
+	struct dirent	*directory;
+	
+	if(a < 2)goto lfile_error;
+	
+	/* Open directory */
+	DirectoryPointer = opendir(commands[1]);
+	if(!DirectoryPointer)return 1;
+	
+	while(directory = readdir(DirectoryPointer))
+		printf("%s\n", directory -> d_name);
+	
+	/* Close directory */
+	closedir(DirectoryPointer);
+	
+	if(WriteLog)
+		log('a', "Printed list of file in directory \"%s\".\n", commands[1]);
+	return 0;
+	
+lfile_error:;
+	if(WriteLog)
+		log('a', "Failed print list of file in directory \"%s\".\n", commands[1]);
+	return 1;
+}
