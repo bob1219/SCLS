@@ -20,6 +20,10 @@ CommandProcess
 
 int
 log
-(char, const char*, ...);
+(
+char,
+const char*,
+...
+);
 
 #endif
