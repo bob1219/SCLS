@@ -771,3 +771,39 @@ command_time
 	
 	return 0;
 }
+
+/*
+ * command_now
+ *
+ * [Description]
+ * Print current date and time
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
+int
+command_now
+(void)
+{
+	time_t	timer;
+	struct tm	*local;
+	
+	timer = time(NULL);
+	local = localtime(&timer);
+	
+	printf("%u/%u/%u %u:%u:%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
+		local -> tm_sec);
+	
+	return 0;
+}

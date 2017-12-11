@@ -82,18 +82,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "time"))
 		return command_time();
 	else if(!strcmp(commands[0], "now"))
-	{
-		time_t	timer;
-		struct tm	*local;
-		
-		timer = time(NULL);
-		local = localtime(&timer);
-		
-		printf("%u/%u/%u %u:%u:%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
-			local -> tm_sec);
-		
-		return 0;
-	}
+		return command_now();
 	else if(!strcmp(commands[0], "exit"))
 		exit(EXIT_SUCCESS);
 }

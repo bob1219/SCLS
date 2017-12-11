@@ -119,4 +119,8 @@ int
 command_time
 (void);
 
+int
+command_now
+(void);
+
 #endif
