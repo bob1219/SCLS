@@ -30,7 +30,7 @@ int
 main
 (void)
 {
-	if(!prepering())
+	if(prepering())
 	{
 		fprintf(stderr, "Failed prepering.\n");
 		abort();
