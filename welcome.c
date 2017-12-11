@@ -30,7 +30,7 @@ void
 welcome
 (void)
 {
-	printf("Welcome to the SCLS version %s.\n", VERSION);
+	printf("Welcome to SCLS version %s.\n", VERSION);
 	
 	if(WriteLog)
 		log('w', "SCLS version %s\n", VERSION);
