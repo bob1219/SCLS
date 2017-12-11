@@ -28,7 +28,22 @@
  *
  * [Call from]
  * welcome function
- * CommandProcess function
+ * command_mdir function
+ * command_rmdir function
+ * command_chdir function
+ * command_cudir function
+ * command_rename function
+ * command_mkfile function
+ * command_rmfile function
+ * command_cpfile function
+ * command_lfile function
+ * command_tview function
+ * command_bview function
+ * command_version function
+ * command_app function
+ * command_date function
+ * command_time function
+ * command_now function
  *
  * [Call to]
  * Nothing
