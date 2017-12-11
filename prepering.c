@@ -33,14 +33,14 @@ prepering
 (void)
 {
 	char		SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, *temp, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-			setting[SETTING_MAX], prompt[PROMPT_MAX]
+			SettingContent[SETTING_MAX], prompt[PROMPT_MAX]
 	FILE		*SettingFilePointer;
 	int		c;
 	bool		WriteLog;
 	
 	sprintf(SettingFilePath, ".%cSETTING", PATH_BREAK_CHARACTER);
 	
-	/* Open setting file */
+	/* Open file */
 	SettingFilePointer = fopen(SettingFilePath, "r");
 	if(!SettingFilePointer)return 1;
 	
@@ -53,21 +53,16 @@ prepering
 		
 		while(1)
 		{
-			/* Read character from setting file */
+			/* Read a character from SettingContent file */
 			c = fgetc(SettingFilePointer);
 			if(c == '\n')break;
 			if(c == EOF)goto endread;
 			
 			/* Buffer >= FILE_LINE_MAX */
-			if((strlen(SettingFileLine) + 2) >= FILE_LINE_MAX)
+			if((strlen(SettingFileLine) + 2) > FILE_LINE_MAX)
 			{
-				temp = (char*)realloc(SettingFileLine, strlen(SettingFileLine) + 2);
-				if(!temp)
-				{
-					free(SettingFileLine);
-					return 1;
-				}
-				
+				temp = (char*)realloc(SettingFileLine, sizeof(char) * (strlen(SettingFileLine) + 2));
+				if(!temp)return 1;
 				SettingFileLine = temp;
 				free(temp);
 			}
@@ -80,24 +75,16 @@ prepering
 		if(!strcmp(SettingFileLine, ""))break;
 		
 		sprintf(format, "%%%u[^=]=%%%us", SETTING_NAME_MAX, SETTING_MAX);
-		sscanf(SettingFileLine, format, SettingName, setting);
+		sscanf(SettingFileLine, format, SettingName, SettingContent);
 		
-		if(!strcmp(SettingName, "prompt"))strcpy(prompt, setting);
+		if(!strcmp(SettingName, "prompt"))strcpy(prompt, SettingContent);
 		else if(!strcmp(SettingName, "WriteLog"))
 		{
-			if(!strcmp(setting, "true"))WriteLog = true;
-			else if(!strcmp(setting, "false"))WriteLog = false;
-			else
-			{
-				free(SettingFileLine);
-				return 1;
-			}
+			if(!strcmp(SettingContent, "true"))WriteLog = true;
+			else if(!strcmp(SettingContent, "false"))WriteLog = false;
+			else return 1;
 		}
-		else
-		{
-			free(SettingFileLine);
-			return 1;
-		}
+		else return 1;
 	}
 	
 endread:;
