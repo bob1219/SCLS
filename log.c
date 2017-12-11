@@ -66,7 +66,7 @@ const char	*format,
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	sprintf(path, ".%clogs%c%u-%u-%u.log", PATH_BREAK_CHARACTER, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_day,
+	sprintf(path, ".%clogs%c%u-%u-%u.log", PATH_BREAK_CHARACTER, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_mday,
 		local -> tm_year + 1900);
 	
 	/* Open file */
@@ -81,17 +81,12 @@ const char	*format,
 		break;
 		
 	default:
-		fprintf(stderr, "Error: Cannot write the log.\n");
-		return 1;
+		goto log_error;
 	}
 	
-	if(!FilePointer)
-	{
-		fprintf(stderr, "Error: Cannot write the log.\n");
-		return 1;
-	}
+	if(!FilePointer)goto log_error;
 	
-	fprintf(FilePointer, "[%u/%u/%u %u:%u:%u]", local -> tm_mon + 1, local -> tm_day, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
+	fprintf(FilePointer, "[%u/%u/%u %u:%u:%u]", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
 		local -> tm_sec);
 	
 	va_start(args, format);
@@ -104,4 +99,8 @@ const char	*format,
 	va_end(args);
 	
 	return 0;
+	
+log_error:;
+	fprintf(stderr, "Error: Cannot open log file \"%s\".\n", path);
+	return 1;
 }
