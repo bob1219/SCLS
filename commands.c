@@ -736,3 +736,38 @@ command_date
 	
 	return 0;
 }
+
+/*
+ * command_time
+ *
+ * [Description]
+ * Print current time
+ *
+ * [Return value]
+ * type:		int
+ * success:		0
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
+int
+command_time
+(void)
+{
+	time_t	timer;
+	struct tm	*local;
+	
+	timer = time(NULL);
+	local = localtime(&timer);
+	
+	printf("%u:%u:%u\n", local -> tm_hour, local -> tm_min, local -> tm_sec);
+	
+	return 0;
+}

@@ -115,4 +115,8 @@ int
 command_date
 (void);
 
+int
+command_time
+(void);
+
 #endif
