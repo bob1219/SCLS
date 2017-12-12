@@ -29,29 +29,30 @@ const char*,
 int
 command_mdir
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
-command_rmdir
+command_rdir
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
 command_rename
 (
-unsigned int,
-const char**
+int,
+const char*,
+const char*
 );
 
 int
 command_chdir
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
@@ -59,45 +60,46 @@ command_cudir
 (void);
 
 int
-command_mkfile
+command_mfile
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
-command_rmfile
+command_rfile
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
 command_cpfile
 (
-unsigned int,
-const char**
+int,
+const char*,
+const char*
 );
 
 int
 command_lfile
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
 command_tview
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
 command_bview
 (
-unsigned int,
-const char**
+int,
+const char*
 );
 
 int
@@ -107,7 +109,7 @@ command_version
 int
 command_app
 (
-unsigned int,
+int,
 const char**
 );
 
