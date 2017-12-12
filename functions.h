@@ -34,7 +34,7 @@ const char*
 );
 
 int
-command_rmdir
+command_rdir
 (
 int,
 const char*
@@ -60,14 +60,14 @@ command_cudir
 (void);
 
 int
-command_mkfile
+command_mfile
 (
 int,
 const char*
 );
 
 int
-command_rmfile
+command_rfile
 (
 int,
 const char*
