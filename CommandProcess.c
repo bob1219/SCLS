@@ -1,16 +1,9 @@
 /* Standard Libraries */
-#include <string.h>
 #include <stdio.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
+#include <string.h>
 
-/* Header files */
+/* Header file */
 #include "macros.h"
-#include "extern.h"
-#include "typedef.h"
 #include "functions.h"
 
 /*
@@ -33,50 +26,64 @@
  * CommandLine function
  *
  * [Call to]
- * Nothing
+ * command_mdir function
+ * command_rdir function
+ * command_chdir function
+ * command_cudir function
+ * command_rename function
+ * command_mfile function
+ * command_rfile function
+ * command_cpfile function
+ * command_lfile function
+ * command_tview function
+ * command_bview function
+ * command_version function
+ * command_app function
+ * command_date function
+ * command_time function
+ * command_now function
  */
 
 int
 CommandProcess
 (const char *command)
 {
-	char			commands[COMMAND_NUMBER_MAX][COMMAND_MAX], command2[COMMAND_MAX], format[FORMAT_MAX];
-	unsigned int	a;
+	int	CommandNumber;
+	char	commands[COMMAND_NUMBER_MAX][COMMAND_MAX], format[FORMAT_MAX];
 	
-	strcpy(command2, command);
-	sprintf(format, "%%%us %%%u[^\n]", COMMAND_MAX, COMMAND_MAX);
+	sprintf(format, "%%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us", COMMAND_MAX, COMMAND_MAX,
+		COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX,
+		COMMAND_MAX, COMMAND_MAX)
 	
-	for(a = 0 ; (a <= COMMAND_NUMBER_MAX) || (strcmp(command2, "\n")) ; a++)
-		sscanf(command2, format, commands[a], command2);
-	
-	a--;
+	CommandNumber = sscanf(command, format, commands[0], commands[1], commands[2], commands[3],
+		commands[4], commands[5], commands[6], commands[7], commands[8], commands[9], commands[10]);
 	
 	if(!strcmp(commands[0], "mdir"))
-		return command_mdir(a, commands);
-	else if(!strcmp(commands[0], "rmdir"))
-		return command_rmdir(a, commands);
+		return command_mdir(CommandNumber, commands[1]);
+	else if(!strcmp(commands[0], "rdir"))
+		return command_rdir(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "rename"))
-		return command_rename(a, commands);
+		return command_rename(CommandNumber, commands[1], commands[2]);
 	else if(!strcmp(commands[0], "chdir"))
-		return command_chdir(a, commands);
+		return command_chdir(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "cudir"))
 		return command_cudir();
-	else if(!strcmp(commands[0], "mkfile"))
-		return command_mkfile(a, commands);
-	else if(!strcmp(commands[0], "rmfile"))
-		return command_rmfile(a, commands);
+	else if(!strcmp(commands[0], "mfile"))
+		return command_mkfile(CommandNumber, commands[1]);
+	else if(!strcmp(commands[0], "rfile"))
+		return command_rmfile(CommandNumber, commands[1])
 	else if(!strcmp(commands[0], "cpfile"))
-		return command_cpfile(a, commands);
+		return command_cpfile(CommandNumber, commands[1], commands[2]);
 	else if(!strcmp(commands[0], "lfile"))
-		return command_lfile(a, commands);
+		return command_lfile(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "tview"))
-		return command_tview(a, commands);
+		return command_tview(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "bview"))
-		return command_bview(a, commands);
+		return command_bview(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "version"))
 		return command_version();
 	else if(!strcmp(commands[0], "app"))
-		return command_app(a, commands);
+		return command_app(CommandNumber, commands)
 	else if(!strcmp(commands[0], "date"))
 		return command_date();
 	else if(!strcmp(commands[0], "time"))
