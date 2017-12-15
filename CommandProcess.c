@@ -1,6 +1,5 @@
-/* Standard Libraries */
+/* Standard Library */
 #include <stdio.h>
-#include <string.h>
 
 /* Header file */
 #include "macros.h"
