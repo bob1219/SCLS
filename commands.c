@@ -92,7 +92,7 @@ int			CommandNumber,
 const char	*DirectoryName
 )
 {
-	if(CommandNumber < 2)
+	if(CommandNumber < 2)goto rmdir_error;
 	
 	if(!rmdir(DirectoryName))
 	{
@@ -120,13 +120,17 @@ rmdir_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	oldname
+ *	type:			const char*
+ *	description:	Old name of target directory or file
+ *
+ * -	newname
+ *	type:			const char*
+ *	description:	New name of target directory or file
  *
  * [Call from]
  * CommandProcess function
@@ -138,23 +142,24 @@ rmdir_error:;
 int
 command_rename
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*oldname
+const char	*newname
 )
 {
-	if(a < 2)goto rename_error;
+	if(CommandNumber < 3)goto rename_error;
 	
-	if(!rename(commands[1], commands[2]))
+	if(!rename(oldname, newname))
 	{
 		if(WriteLog)
-			log('a', "Renamed a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+			log('a', "Renamed \"%s\" -> \"%s\".\n", oldname, newname);
 		return 0;
 	}
 	else goto rename_error;
 	
 rename_error:;
 	if(WriteLog)
-		log('a', "Failed rename a file or directory \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+		log('a', "Failed rename \"%s\" -> \"%s\".\n", oldname, newname);
 	return 1;
 }
 
