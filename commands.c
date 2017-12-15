@@ -323,13 +323,13 @@ mkfile_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	FileName
+ *	type:			const char*
+ *	description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -341,23 +341,23 @@ mkfile_error:;
 int
 command_rmfile
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*FileName
 )
 {
-	if(a < 1)goto rmfile_error;
+	if(CommandNumber < 2)goto rmfile_error;
 	
-	if(!remove(commands[1]))
+	if(!remove(FileName))
 	{
 		if(WriteLog)
-			log('a', "Removed a file \"%s\".\n", commands[1]);
+			log('a', "Removed a file \"%s\".\n", FileName);
 		return 0;
 	}
 	else goto rmfile_error;
 	
 rmfile_error:;
 	if(WriteLog)
-		log('a', "Failed remove a file \"%s\".\n", commands[1]);
+		log('a', "Failed remove a file \"%s\".\n", FileName);
 	return 1;
 }
 
