@@ -567,13 +567,13 @@ tview_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	FileName
+ *	type:			const char*
+ *	description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -585,17 +585,17 @@ tview_error:;
 int
 command_bview
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*FileName
 )
 {
 	FILE		*FilePointer;
-	BYTE	b;
+	BYTE		b;
 	
-	if(a < 1)goto bview_error;
+	if(CommandNumber < 2)goto bview_error;
 	
 	/* Open file */
-	FilePointer = fopen(commands[1], "r");
+	FilePointer = fopen(FileName, "rb");
 	if(!FilePointer)goto bview_error;
 	
 	for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
@@ -608,12 +608,12 @@ const char	**commands
 	fclose(FilePointer);
 	
 	if(WriteLog)
-		log('a', "Printed contents of a file \"%s\" in binary mode.\n", commands[1]);
+		log('a', "Printed contents of a binary-file \"%s\".\n", FileName);
 	return 0;
 	
 bview_error:;
 	if(WriteLog)
-		log('a', "Failed print contents of a file \"%s\" in binary mode.\n", commands[1]);
+		log('a', "Failed print contents of a binary-file \"%s\".\n", FileName);
 	return 1;
 }
 
