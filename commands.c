@@ -693,11 +693,11 @@ const char	**commands
 	{
 		if((strlen(cmd) + 1 + strlen(commands[i]) + 1) > COMMAND_MAX)
 		{
-			char	*temp;
+			char	*temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + 1 + strlen(commands[i]) + 1));
 			
-			temp = (char*)realloc(cmd, strlen(cmd) + 1 + strlen(commands[i]) + 1);
 			if(!temp)goto app_error;
 			cmd = temp;
+			free(temp);
 		}
 		
 		sprintf(cmd, "%s %s", cmd, command[i]);
