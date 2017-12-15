@@ -10,7 +10,7 @@
  * log
  *
  * [Description]
- * Write the log
+ * Write a log
  *
  * [Return value]
  * type:		int
@@ -70,19 +70,7 @@ const char	*format,
 		local -> tm_year + 1900);
 	
 	/* Open file */
-	switch(mode)
-	{
-	case 'w':
-		FilePointer = fopen(path, "w");
-		break;
-		
-	case 'a':
-		FilePointer = fopen(path, "a");
-		break;
-		
-	default:
-		goto log_error;
-	}
+	FilePointer = fopen(path, (mode == 'w') ? "w" : "a");
 	
 	if(!FilePointer)goto log_error;
 	
@@ -101,6 +89,6 @@ const char	*format,
 	return 0;
 	
 log_error:;
-	fprintf(stderr, "Error: Cannot open log file \"%s\".\n", path);
+	fprintf(stderr, "Error: Cannot open a log file \"%s\".\n", path);
 	return 1;
 }
