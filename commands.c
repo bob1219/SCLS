@@ -444,13 +444,13 @@ cpfile_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	DirectoryName
+ *	type:			const char*
+ *	description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -462,18 +462,18 @@ cpfile_error:;
 int
 command_lfile
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*DirectoryName
 )
 {
 	DIR			*DirectoryPointer;
 	struct dirent	*directory;
 	
-	if(a < 1)goto lfile_error;
+	if(CommandNumber < 2)goto lfile_error;
 	
 	/* Open directory */
-	DirectoryPointer = opendir(commands[1]);
-	if(!DirectoryPointer)return 1;
+	DirectoryPointer = opendir(DirectoryName);
+	if(!DirectoryPointer)goto lfile_error;
 	
 	while(directory = readdir(DirectoryPointer))
 		printf("%s\n", directory -> d_name);
@@ -482,12 +482,12 @@ const char	**commands
 	closedir(DirectoryPointer);
 	
 	if(WriteLog)
-		log('a', "Printed list of file in directory \"%s\".\n", commands[1]);
+		log('a', "Printed list of files in directory \"%s\".\n", DirectoryName);
 	return 0;
 	
 lfile_error:;
 	if(WriteLog)
-		log('a', "Failed print list of file in directory \"%s\".\n", commands[1]);
+		log('a', "Failed print list of file in directory \"%s\".\n", DirectoryName);
 	return 1;
 }
 
