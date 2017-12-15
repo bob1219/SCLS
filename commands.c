@@ -20,13 +20,13 @@
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	DirectoryName
+ *	type:			const char*
+ *	description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -38,13 +38,13 @@
 int
 command_mdir
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*DirectoryName
 )
 {
-	if(a < 1)goto mdir_error;
+	if(CommandNumber < 2)goto mdir_error;
 	
-	if(!mkdir(commands[1]))
+	if(!mkdir(DirectoryName))
 	{
 		if(WriteLog)
 			log('a', "Made a file \"%s\".\n", commands[1]);
