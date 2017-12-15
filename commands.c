@@ -7,6 +7,7 @@
 #include "extern.h"
 #include "functions.h"
 #include "macros.h"
+#include "typedef.h"
 
 /*
  * command_mdir
@@ -373,13 +374,17 @@ rmfile_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	from
+ *	type:			const char*
+ *	description:	Name of copy source file
+ *
+ * -	to
+ *	type:			const char*
+ *	description:	Name of copy destination file
  *
  * [Call from]
  * CommandProcess function
@@ -391,18 +396,19 @@ rmfile_error:;
 int
 command_cpfile
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*from,
+const char	*to
 )
 {
 	FILE		*FromFilePointer, *ToFilePointer;
 	BYTE		b;
 	
-	if(a < 2)goto cpfile_error;
+	if(CommandNumber < 3)goto cpfile_error;
 	
 	/* Open file */
-	FromFilePointer	= fopen(commands[1], "rb");
-	ToFilePointer		= fopen(commands[2], "wb");
+	FromFilePointer = fopen(from, "rb");
+	ToFilePointer = fopen(to, "wb");
 	if((!FromFilePointer) || (!ToFilePointer))
 		goto cpfile_error;
 	
@@ -417,12 +423,12 @@ const char	**commands
 	fclose(ToFilePointer);
 	
 	if(WriteLog)
-		log('a', "Copied file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+		log('a', "Copied file \"%s\" -> \"%s\".\n", from, to);
 	return 0;
 	
 cpfile_error:;
 	if(WriteLog)
-		log('a', "Failed copy file \"%s\" -> \"%s\".\n", commands[1], commands[2]);
+		log('a', "Failed copy file \"%s\" -> \"%s\".\n", from, to);
 	return 1;
 }
 
