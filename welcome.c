@@ -1,6 +1,5 @@
 /* Standard Library */
 #include <stdio.h>
-#include <stdbool.h>
 
 /* Header files */
 #include "macros.h"

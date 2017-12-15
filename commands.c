@@ -1,6 +1,5 @@
 /* Standard Libraries */
 #include <direct.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
 
