@@ -175,13 +175,13 @@ rename_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	DirectoryName
+ *	type:			const char*
+ *	description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -193,23 +193,23 @@ rename_error:;
 int
 command_chdir
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*DirectoryName
 )
 {
-	if(a < 1)goto chdir_error;
+	if(CommandNumber < 2)goto chdir_error;
 	
-	if(!chdir(commands[1]))
+	if(!chdir(DirectoryName))
 	{
 		if(WriteLog)
-			log('a', "Changed current directory \"%s\".\n", commands[1]);
+			log('a', "Changed current directory to \"%s\".\n", DirectoryName);
 		return 0;
 	}
 	else goto chdir_error;
 	
 chdir_error:;
 	if(WriteLog)
-		log('a', "Failed change current directory \"%s\".\n", commands[1]);
+		log('a', "Failed change current directory to \"%s\".\n", DirectoryName);
 	return 1;
 }
 
