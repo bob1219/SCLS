@@ -47,14 +47,14 @@ const char	*DirectoryName
 	if(!mkdir(DirectoryName))
 	{
 		if(WriteLog)
-			log('a', "Made a file \"%s\".\n", commands[1]);
+			log('a', "Made a directory \"%s\".\n", DirectoryName);
 		return 0;
 	}
 	else goto mdir_error;
 	
 mdir_error:;
 	if(WriteLog)
-		log('a', "Failed make a file \"%s\".\n", commands[1]);
+		log('a', "Failed make a directory \"%s\".\n", DirectoryName);
 	return 1;
 }
 
@@ -70,13 +70,13 @@ mdir_error:;
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	DirectoryName
+ *	type:			const char*
+ *	description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -88,23 +88,23 @@ mdir_error:;
 int
 command_rmdir
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*DirectoryName
 )
 {
-	if(a < 1)goto rmdir_error;
+	if(CommandNumber < 2)
 	
-	if(!rmdir(commands[1]))
+	if(!rmdir(DirectoryName))
 	{
 		if(WriteLog)
-			log('a', "Removed a directory \"%s\".\n", commands[1]);
+			log('a', "Removed a directory \"%s\".\n", DirectoryName);
 		return 0;
 	}
 	else goto rmdir_error;
 	
 rmdir_error:;
 	if(WriteLog)
-		log('a', "Failed remove a file \"%s\".\n", commands[1]);
+		log('a', "Failed remove a directory \"%s\".\n", DirectoryName);
 	return 1;
 }
 
