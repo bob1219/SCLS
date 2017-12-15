@@ -2,6 +2,7 @@
 #include <direct.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 /* Header files */
 #include "extern.h"
@@ -499,17 +500,17 @@ lfile_error:;
  *
  * [Return value]
  * type:		int
- * success:	0
+ * success:		0
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:		unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:		const char**
- *	description:	commands
+ * -	FileName
+ *	type:			const char*
+ *	description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -521,32 +522,36 @@ lfile_error:;
 int
 command_tview
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*FileName
 )
 {
 	FILE	*FilePointer;
 	char	FileLine[FILE_LINE_MAX];
 	
-	if(a < 1)goto tview_error;
+	if(CommandNumber < 2)goto tview_error;
 	
 	/* Open file */
-	FilePointer = fopen(commands[1], "r");
+	FilePointer = fopen(FileName, "r");
 	if(!FilePointer)goto tview_error;
 	
-	for(unsigned int a = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; a++)
-		printf("%u:\t%s", a, FileLine);
+	for(unsigned int i = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; a++)
+	{
+		if(FileLine[strlen(FileLine) - 1] == '\n')
+			FileLine[strlen(FileLine) - 1] = '\0';
+		printf("%u:\t%s\n", i, FileLine);
+	}
 	
 	/* Close file */
 	fclose(FilePointer);
 	
 	if(WriteLog)
-		log('a', "Printed contents of a file \"%s\" in text mode.\n", commands[1]);
+		log('a', "Printed contents of a text-file \"%s\".\n", FileName);
 	return 0;
 	
 tview_error:;
 	if(WriteLog)
-		log('a', "Failed print contents of a file \"%s\" in text mode.\n"), commands[1]);
+		log('a', "Failed print contents of a text-file \"%s\".\n", FileName);
 	return 1;
 }
 
