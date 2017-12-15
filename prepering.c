@@ -32,7 +32,7 @@ int
 prepering
 (void)
 {
-	char		SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, *temp, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
+	char		SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
 			SettingContent[SETTING_MAX], prompt[PROMPT_MAX]
 	FILE		*SettingFilePointer;
 	int		c;
@@ -49,11 +49,9 @@ prepering
 	
 	while(1)
 	{
-		strcpy(SettingFileLine, "");
-		
 		while(1)
 		{
-			/* Read a character from SettingContent file */
+			/* Read a character from setting file */
 			c = fgetc(SettingFilePointer);
 			if(c == '\n')break;
 			if(c == EOF)goto endread;
@@ -61,7 +59,8 @@ prepering
 			/* Buffer >= FILE_LINE_MAX */
 			if((strlen(SettingFileLine) + 2) > FILE_LINE_MAX)
 			{
-				temp = (char*)realloc(SettingFileLine, sizeof(char) * (strlen(SettingFileLine) + 2));
+				char	*temp = (char*)realloc(SettingFileLine, sizeof(char) * (strlen(SettingFileLine) + 2));
+				
 				if(!temp)return 1;
 				SettingFileLine = temp;
 				free(temp);
@@ -72,12 +71,11 @@ prepering
 			strcat(SettingFileLine, s);
 		}
 		
-		if(!strcmp(SettingFileLine, ""))break;
-		
 		sprintf(format, "%%%u[^=]=%%%us", SETTING_NAME_MAX, SETTING_MAX);
 		sscanf(SettingFileLine, format, SettingName, SettingContent);
 		
-		if(!strcmp(SettingName, "prompt"))strcpy(prompt, SettingContent);
+		if(!strcmp(SettingName, "prompt"))
+			strcpy(prompt, SettingContent);
 		else if(!strcmp(SettingName, "WriteLog"))
 		{
 			if(!strcmp(SettingContent, "true"))WriteLog = true;
@@ -85,6 +83,8 @@ prepering
 			else return 1;
 		}
 		else return 1;
+		
+		strcpy(SettingFileLine, "");
 	}
 	
 endread:;
