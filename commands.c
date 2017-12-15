@@ -268,13 +268,13 @@ command_cudir
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
- * -	commands
- *	type:			const char**
- *	description:	commands
+ * -	FileName
+ *	type:			const char*
+ *	description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -286,30 +286,28 @@ command_cudir
 int
 command_mkfile
 (
-unsigned int	a,
-const char	**commands
+int			CommandNumber,
+const char	*FileName
 )
 {
 	FILE	*FilePointer;
 	
-	if(a < 1)return 1;
+	if(CommandNumber < 2)goto mkfile_error;
 	
 	/* Open file */
-	FilePointer = fopen(commands[1], "w");
+	FilePointer = fopen(FileName, "w");
 	if(!FilePointer)goto mkfile_error;
-	else
-	{
-		/* Close file */
-		fclose(FilePointer);
-		
-		if(WriteLog)
-			log('a', "Made a file \"%s\".\n", commands[1]);
-		return 0;
-	}
+	
+	/* Close file */
+	fclose(FilePointer);
+	
+	if(WriteLog)
+		log('a', "Made a file \"%s\".\n", FileName);
+	return 0;
 	
 mkfile_error:;
 	if(WriteLog)
-		log('a', "Failed make a file \"%s\".\n", commands[1]);
+		log('a', "Failed make a file \"%s\".\n", FileName);
 	return 1;
 }
 
