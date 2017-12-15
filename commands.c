@@ -649,7 +649,7 @@ command_version
  * command_app
  *
  * [Description]
- * Execution a software
+ * Execution a application
  *
  * [Return value]
  * type:		int
@@ -657,8 +657,8 @@ command_version
  * failure:		1
  *
  * [Arguments]
- * -	a
- *	type:			unsigned int
+ * -	CommandNumber
+ *	type:			int
  *	description:	Number of command
  *
  * -	commands
@@ -675,17 +675,20 @@ command_version
 int
 command_app
 (
-unsigned int	a,
+int			CommandNumber,
 const char	**commands
 )
 {
-	char	*cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
+	char	*cmd;
+	int	r;
+	
+	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
 	
 	if(!system(NULL))goto app_error;
 	
 	if(!cmd)goto app_error;
 	
-	for(unsigned int i = 1 ; i <= a ; i++)
+	for(unsigned int i = 1 ; i < CommandNumber ; i++)
 	{
 		if((strlen(cmd) + 1 + strlen(commands[i]) + 1) > COMMAND_MAX)
 		{
@@ -699,14 +702,14 @@ const char	**commands
 		sprintf(cmd, "%s %s", cmd, command[i]);
 	}
 	
-	system(cmd);
+	r = system(cmd);
 	
 	/* Free memory */
 	free(cmd);
 	
 	if(WriteLog)
-		log('a', "Executed a software \"%s\".\n", commands[1]);
-	return 0;
+		log('a', "Executed a application \"%s\".\n", commands[1]);
+	return r;
 	
 app_error:;
 	if(WriteLog)
