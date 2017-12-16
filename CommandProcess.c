@@ -50,7 +50,7 @@ CommandProcess
 (const char *command)
 {
 	int	CommandNumber;
-	char	commands[COMMAND_NUMBER_MAX][COMMAND_MAX], format[FORMAT_MAX];
+	char	commands[COMMAND_NUMBER_MAX][COMMAND_MAX], format[FORMAT_MAX], *a[COMMAND_NUMBER_MAX];
 	
 	sprintf(format, "%%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us", COMMAND_MAX, COMMAND_MAX,
 		COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX,
@@ -58,6 +58,9 @@ CommandProcess
 	
 	CommandNumber = sscanf(command, format, commands[0], commands[1], commands[2], commands[3],
 		commands[4], commands[5], commands[6], commands[7], commands[8], commands[9], commands[10]);
+	
+	for(unsigned int i = 0 ; i < COMMAND_NUMBER_MAX ; i++)
+		a[i] = commands[i];
 	
 	if(!strcmp(commands[0], "mdir"))
 		return command_mdir(CommandNumber, commands[1]);
@@ -84,7 +87,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "version"))
 		return command_version();
 	else if(!strcmp(commands[0], "app"))
-		return command_app(CommandNumber, (const char**)commands);
+		return command_app(CommandNumber, (const char**)a);
 	else if(!strcmp(commands[0], "date"))
 		return command_date();
 	else if(!strcmp(commands[0], "time"))

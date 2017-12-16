@@ -684,22 +684,25 @@ int			CommandNumber,
 const char	**commands
 )
 {
-	char	*cmd;
+	char	*cmd, *temp;
 	int	r;
-	
-	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
 	
 	if(!system(NULL))goto app_error;
 	
+	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
 	if(!cmd)goto app_error;
 	
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
 	{
-		if((strlen(cmd) + 1 + strlen(commands[i]) + 1) > COMMAND_MAX)
+		if((strlen(cmd) + strlen(commands[i]) + 2) > COMMAND_MAX)
 		{
-			char	*temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + 1 + strlen(commands[i]) + 1));
+			temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + strlen(commands[i]) + 2));
 			
-			if(!temp)goto app_error;
+			if(!temp)
+			{
+				free(cmd);
+				goto app_error;
+			}
 			cmd = temp;
 			free(temp);
 		}
@@ -713,12 +716,12 @@ const char	**commands
 	free(cmd);
 	
 	if(WriteLog)
-		OutputLog('a', "Executed a application \"%s\".\n", commands[1]);
+		OutputLog('a', "Executed a application \"%s\", Return value is %d.\n", commands[1], r);
 	return r;
 	
 app_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed execution a software \"%s\".\n", commands[1]);
+		OutputLog('a', "Failed execution a application \"%s\".\n", commands[1]);
 	return 1;
 }
 
