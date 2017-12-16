@@ -604,11 +604,13 @@ const char	*FileName
 	for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
 	{
 		if(a != 1)putchar('-');
-		printf("%x", b);
+		printf("%02X", b);
 	}
 	
 	/* Close file */
 	fclose(FilePointer);
+	
+	putchar('\n');
 	
 	if(WriteLog)
 		OutputLog('a', "Printed contents of a binary-file \"%s\".\n", FileName);
