@@ -1,3 +1,4 @@
 *.BAK
 *.txt
 build.cmd
+*.o
