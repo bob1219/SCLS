@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-/* Header file */
+/* Header files */
 #include "macros.h"
+#include "extern.h"
 
 /*
  * OutputLog
@@ -66,7 +67,7 @@ const char	*format,
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	sprintf(path, ".%clogs%c%u-%u-%u.log", PATH_BREAK_CHARACTER, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_mday,
+	sprintf(path, "%s%c%u-%u-%u.log", LogDirectory, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_mday,
 		local -> tm_year + 1900);
 	
 	/* Open file */

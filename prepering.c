@@ -3,10 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 
-/* Header files */
+/* Header file */
 #include "macros.h"
-#include "extern.h"
 
 /*
  * prepering
@@ -30,16 +30,22 @@
  */
 
 bool	WriteLog = true;
-char	prompt[PROMPT_MAX] = "";
+char	prompt[PROMPT_MAX] = "", LogDirectory[FILENAME_MAX] = "";
 
 int
 prepering
 (void)
 {
 	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-		SettingContent[SETTING_MAX];
+		SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX];
 	FILE	*SettingFilePointer;
 	int	c;
+	
+	if(!getcwd(RootDirectory, FILENAME_MAX))
+		return 1;
+	if(RootDirectory[strlen(RootDirectory) - 1] == PATH_BREAK_CHARACTER)
+		RootDirectory[strlen(RootDirectory) - 1] = '\0';
+	sprintf(LogDirectory, "%s%clogs", RootDirectory, PATH_BREAK_CHARACTER);
 	
 	sprintf(SettingFilePath, ".%cSETTING", PATH_BREAK_CHARACTER);
 	
