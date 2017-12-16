@@ -1,10 +1,14 @@
 #ifndef	EXTERN_H
 #define	EXTERN_H
 
-/* Standard Library */
+/* Standard Libraries */
 #include <stdbool.h>
+#include <stdio.h>
 
-extern char	prompt[PROMPT_MAX];
+/* Header file */
+#include "macros.h"
+
+extern char	prompt[PROMPT_MAX], LogDirectory[FILENAME_MAX];
 extern bool	WriteLog;
 
 #endif
