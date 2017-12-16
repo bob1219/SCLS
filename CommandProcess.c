@@ -91,4 +91,9 @@ CommandProcess
 		return command_now();
 	else if(!strcmp(commands[0], "exit"))
 		exit(EXIT_SUCCESS);
+	else
+	{
+		fprintf(stderr, "Unknown command \"%s\".\n", commands[0]);
+		return 1;
+	}
 }
