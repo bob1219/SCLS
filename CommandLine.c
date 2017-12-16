@@ -7,6 +7,7 @@
 /* Header files */
 #include "macros.h"
 #include "extern.h"
+#include "functions.h"
 
 /*
  * CommandLine

@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
+#include <dirent.h>
+#include <stdlib.h>
 
 /* Header files */
 #include "extern.h"
@@ -35,7 +37,7 @@
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -50,19 +52,19 @@ const char	*DirectoryName
 	if(!mkdir(DirectoryName))
 	{
 		if(WriteLog)
-			log('a', "Made a directory \"%s\".\n", DirectoryName);
+			OutputLog('a', "Made a directory \"%s\".\n", DirectoryName);
 		return 0;
 	}
 	else goto mdir_error;
 	
 mdir_error:;
 	if(WriteLog)
-		log('a', "Failed make a directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed make a directory \"%s\".\n", DirectoryName);
 	return 1;
 }
 
 /*
- * command_rmdir
+ * command_rdir
  *
  * [Description]
  * Remove a directory
@@ -85,29 +87,29 @@ mdir_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
-command_rmdir
+command_rdir
 (
 int			CommandNumber,
 const char	*DirectoryName
 )
 {
-	if(CommandNumber < 2)goto rmdir_error;
+	if(CommandNumber < 2)goto rdir_error;
 	
 	if(!rmdir(DirectoryName))
 	{
 		if(WriteLog)
-			log('a', "Removed a directory \"%s\".\n", DirectoryName);
+			OutputLog('a', "Removed a directory \"%s\".\n", DirectoryName);
 		return 0;
 	}
-	else goto rmdir_error;
+	else goto rdir_error;
 	
-rmdir_error:;
+rdir_error:;
 	if(WriteLog)
-		log('a', "Failed remove a directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed remove a directory \"%s\".\n", DirectoryName);
 	return 1;
 }
 
@@ -139,14 +141,14 @@ rmdir_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
 command_rename
 (
 int			CommandNumber,
-const char	*oldname
+const char	*oldname,
 const char	*newname
 )
 {
@@ -155,14 +157,14 @@ const char	*newname
 	if(!rename(oldname, newname))
 	{
 		if(WriteLog)
-			log('a', "Renamed \"%s\" -> \"%s\".\n", oldname, newname);
+			OutputLog('a', "Renamed \"%s\" -> \"%s\".\n", oldname, newname);
 		return 0;
 	}
 	else goto rename_error;
 	
 rename_error:;
 	if(WriteLog)
-		log('a', "Failed rename \"%s\" -> \"%s\".\n", oldname, newname);
+		OutputLog('a', "Failed rename \"%s\" -> \"%s\".\n", oldname, newname);
 	return 1;
 }
 
@@ -190,7 +192,7 @@ rename_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -205,14 +207,14 @@ const char	*DirectoryName
 	if(!chdir(DirectoryName))
 	{
 		if(WriteLog)
-			log('a', "Changed current directory to \"%s\".\n", DirectoryName);
+			OutputLog('a', "Changed current directory to \"%s\".\n", DirectoryName);
 		return 0;
 	}
 	else goto chdir_error;
 	
 chdir_error:;
 	if(WriteLog)
-		log('a', "Failed change current directory to \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed change current directory to \"%s\".\n", DirectoryName);
 	return 1;
 }
 
@@ -234,7 +236,7 @@ chdir_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -245,22 +247,22 @@ command_cudir
 	
 	if(!getcwd(CurrentDirectory, FILENAME_MAX))
 	{
-		printf("current directory: \"%s\"\n", CurrentDirectory);
-		
 		if(WriteLog)
-			log('a', "Current directory is \"%s\".\n", CurrentDirectory);
-		return 0;
+			OutputLog('a', "Failed get current directory.\n");
+		return 1;
 	}
 	else
 	{
+		printf("current directory: \"%s\"\n", CurrentDirectory);
+		
 		if(WriteLog)
-			log('a', "Failed get current directory.\n");
-		return 1;
+			OutputLog('a', "Current directory is \"%s\".\n", CurrentDirectory);
+		return 0;
 	}
 }
 
 /*
- * command_mkfile
+ * command_mfile
  *
  * [Description]
  * Make a file
@@ -283,11 +285,11 @@ command_cudir
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
-command_mkfile
+command_mfile
 (
 int			CommandNumber,
 const char	*FileName
@@ -295,27 +297,27 @@ const char	*FileName
 {
 	FILE	*FilePointer;
 	
-	if(CommandNumber < 2)goto mkfile_error;
+	if(CommandNumber < 2)goto mfile_error;
 	
 	/* Open file */
 	FilePointer = fopen(FileName, "w");
-	if(!FilePointer)goto mkfile_error;
+	if(!FilePointer)goto mfile_error;
 	
 	/* Close file */
 	fclose(FilePointer);
 	
 	if(WriteLog)
-		log('a', "Made a file \"%s\".\n", FileName);
+		OutputLog('a', "Made a file \"%s\".\n", FileName);
 	return 0;
 	
-mkfile_error:;
+mfile_error:;
 	if(WriteLog)
-		log('a', "Failed make a file \"%s\".\n", FileName);
+		OutputLog('a', "Failed make a file \"%s\".\n", FileName);
 	return 1;
 }
 
 /*
- * command_rmfile
+ * command_rfile
  *
  * [Description]
  * Remove a file
@@ -338,29 +340,29 @@ mkfile_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
-command_rmfile
+command_rfile
 (
 int			CommandNumber,
 const char	*FileName
 )
 {
-	if(CommandNumber < 2)goto rmfile_error;
+	if(CommandNumber < 2)goto rfile_error;
 	
 	if(!remove(FileName))
 	{
 		if(WriteLog)
-			log('a', "Removed a file \"%s\".\n", FileName);
+			OutputLog('a', "Removed a file \"%s\".\n", FileName);
 		return 0;
 	}
-	else goto rmfile_error;
+	else goto rfile_error;
 	
-rmfile_error:;
+rfile_error:;
 	if(WriteLog)
-		log('a', "Failed remove a file \"%s\".\n", FileName);
+		OutputLog('a', "Failed remove a file \"%s\".\n", FileName);
 	return 1;
 }
 
@@ -392,7 +394,7 @@ rmfile_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -425,12 +427,12 @@ const char	*to
 	fclose(ToFilePointer);
 	
 	if(WriteLog)
-		log('a', "Copied file \"%s\" -> \"%s\".\n", from, to);
+		OutputLog('a', "Copied file \"%s\" -> \"%s\".\n", from, to);
 	return 0;
 	
 cpfile_error:;
 	if(WriteLog)
-		log('a', "Failed copy file \"%s\" -> \"%s\".\n", from, to);
+		OutputLog('a', "Failed copy file \"%s\" -> \"%s\".\n", from, to);
 	return 1;
 }
 
@@ -458,7 +460,7 @@ cpfile_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -484,12 +486,12 @@ const char	*DirectoryName
 	closedir(DirectoryPointer);
 	
 	if(WriteLog)
-		log('a', "Printed list of files in directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Printed list of files in directory \"%s\".\n", DirectoryName);
 	return 0;
 	
 lfile_error:;
 	if(WriteLog)
-		log('a', "Failed print list of file in directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed print list of file in directory \"%s\".\n", DirectoryName);
 	return 1;
 }
 
@@ -517,7 +519,7 @@ lfile_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -536,7 +538,7 @@ const char	*FileName
 	FilePointer = fopen(FileName, "r");
 	if(!FilePointer)goto tview_error;
 	
-	for(unsigned int i = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; a++)
+	for(unsigned int i = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; i++)
 	{
 		if(FileLine[strlen(FileLine) - 1] == '\n')
 			FileLine[strlen(FileLine) - 1] = '\0';
@@ -547,12 +549,12 @@ const char	*FileName
 	fclose(FilePointer);
 	
 	if(WriteLog)
-		log('a', "Printed contents of a text-file \"%s\".\n", FileName);
+		OutputLog('a', "Printed contents of a text-file \"%s\".\n", FileName);
 	return 0;
 	
 tview_error:;
 	if(WriteLog)
-		log('a', "Failed print contents of a text-file \"%s\".\n", FileName);
+		OutputLog('a', "Failed print contents of a text-file \"%s\".\n", FileName);
 	return 1;
 }
 
@@ -580,7 +582,7 @@ tview_error:;
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -602,19 +604,21 @@ const char	*FileName
 	for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
 	{
 		if(a != 1)putchar('-');
-		printf("%x", b);
+		printf("%02X", b);
 	}
 	
 	/* Close file */
 	fclose(FilePointer);
 	
+	putchar('\n');
+	
 	if(WriteLog)
-		log('a', "Printed contents of a binary-file \"%s\".\n", FileName);
+		OutputLog('a', "Printed contents of a binary-file \"%s\".\n", FileName);
 	return 0;
 	
 bview_error:;
 	if(WriteLog)
-		log('a', "Failed print contents of a binary-file \"%s\".\n", FileName);
+		OutputLog('a', "Failed print contents of a binary-file \"%s\".\n", FileName);
 	return 1;
 }
 
@@ -670,7 +674,7 @@ command_version
  * CommandProcess function
  *
  * [Call to]
- * log function
+ * OutputLog function
  */
 
 int
@@ -680,27 +684,30 @@ int			CommandNumber,
 const char	**commands
 )
 {
-	char	*cmd;
+	char	*cmd, *temp;
 	int	r;
-	
-	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
 	
 	if(!system(NULL))goto app_error;
 	
+	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
 	if(!cmd)goto app_error;
 	
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
 	{
-		if((strlen(cmd) + 1 + strlen(commands[i]) + 1) > COMMAND_MAX)
+		if((strlen(cmd) + strlen(commands[i]) + 2) > COMMAND_MAX)
 		{
-			char	*temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + 1 + strlen(commands[i]) + 1));
+			temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + strlen(commands[i]) + 2));
 			
-			if(!temp)goto app_error;
+			if(!temp)
+			{
+				free(cmd);
+				goto app_error;
+			}
 			cmd = temp;
 			free(temp);
 		}
 		
-		sprintf(cmd, "%s %s", cmd, command[i]);
+		sprintf(cmd, "%s %s", cmd, commands[i]);
 	}
 	
 	r = system(cmd);
@@ -709,12 +716,12 @@ const char	**commands
 	free(cmd);
 	
 	if(WriteLog)
-		log('a', "Executed a application \"%s\".\n", commands[1]);
+		OutputLog('a', "Executed a application \"%s\", Return value is %d.\n", commands[1], r);
 	return r;
 	
 app_error:;
 	if(WriteLog)
-		log('a', "Failed execution a software \"%s\".\n", commands[1]);
+		OutputLog('a', "Failed execution a application \"%s\".\n", commands[1]);
 	return 1;
 }
 

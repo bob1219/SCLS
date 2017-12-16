@@ -19,7 +19,7 @@ CommandProcess
 (const char*);
 
 int
-log
+OutputLog
 (
 char,
 const char*,

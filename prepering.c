@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 
 /* Header file */
 #include "macros.h"
@@ -28,15 +29,23 @@
  * Nothing
  */
 
+bool	WriteLog = true;
+char	prompt[PROMPT_MAX] = "", LogDirectory[FILENAME_MAX] = "";
+
 int
 prepering
 (void)
 {
-	char		SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-			SettingContent[SETTING_MAX], prompt[PROMPT_MAX]
-	FILE		*SettingFilePointer;
-	int		c;
-	bool		WriteLog;
+	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
+		SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX];
+	FILE	*SettingFilePointer;
+	int	c;
+	
+	if(!getcwd(RootDirectory, FILENAME_MAX))
+		return 1;
+	if(RootDirectory[strlen(RootDirectory) - 1] == PATH_BREAK_CHARACTER)
+		RootDirectory[strlen(RootDirectory) - 1] = '\0';
+	sprintf(LogDirectory, "%s%clogs", RootDirectory, PATH_BREAK_CHARACTER);
 	
 	sprintf(SettingFilePath, ".%cSETTING", PATH_BREAK_CHARACTER);
 	
@@ -66,7 +75,8 @@ prepering
 				free(temp);
 			}
 			
-			s = {c, '\0'}
+			s[0] = c;
+			s[1] = '\0';
 			
 			strcat(SettingFileLine, s);
 		}
