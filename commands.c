@@ -247,17 +247,17 @@ command_cudir
 	
 	if(!getcwd(CurrentDirectory, FILENAME_MAX))
 	{
+		if(WriteLog)
+			OutputLog('a', "Failed get current directory.\n");
+		return 1;
+	}
+	else
+	{
 		printf("current directory: \"%s\"\n", CurrentDirectory);
 		
 		if(WriteLog)
 			OutputLog('a', "Current directory is \"%s\".\n", CurrentDirectory);
 		return 0;
-	}
-	else
-	{
-		if(WriteLog)
-			OutputLog('a', "Failed get current directory.\n");
-		return 1;
 	}
 }
 
