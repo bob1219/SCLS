@@ -131,4 +131,7 @@ Source file
 History
 --------
 * Version 1.0 (December 16th, 2017)  
-First version
+First version  
+
+* Version 1.1 (December 16th, 2017)  
+Addition a process of unknown command  

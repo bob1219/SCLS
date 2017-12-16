@@ -1,6 +1,8 @@
 *.BAK
 *.txt
+
 logs/*
 !.gitkeep
+
 build.cmd
 *.o
