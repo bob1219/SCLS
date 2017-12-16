@@ -4,6 +4,9 @@
 /* Standard Library */
 #include <stdbool.h>
 
+/* Header file */
+#include "macros.h"
+
 extern char	prompt[PROMPT_MAX];
 extern bool	WriteLog;
 

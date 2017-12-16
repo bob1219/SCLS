@@ -7,7 +7,7 @@
 #include "macros.h"
 
 /*
- * log
+ * OutputLog
  *
  * [Description]
  * Write a log
@@ -50,7 +50,7 @@
  */
 
 int
-log
+OutputLog
 (
 char			mode,
 const char	*format,

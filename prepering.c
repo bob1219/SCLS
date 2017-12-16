@@ -4,8 +4,9 @@
 #include <string.h>
 #include <stdbool.h>
 
-/* Header file */
+/* Header files */
 #include "macros.h"
+#include "extern.h"
 
 /*
  * prepering
@@ -28,15 +29,17 @@
  * Nothing
  */
 
+bool	WriteLog = true;
+char	prompt[PROMPT_MAX] = "";
+
 int
 prepering
 (void)
 {
-	char		SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-			SettingContent[SETTING_MAX], prompt[PROMPT_MAX]
-	FILE		*SettingFilePointer;
-	int		c;
-	bool		WriteLog;
+	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
+		SettingContent[SETTING_MAX];
+	FILE	*SettingFilePointer;
+	int	c;
 	
 	sprintf(SettingFilePath, ".%cSETTING", PATH_BREAK_CHARACTER);
 	
@@ -66,7 +69,8 @@ prepering
 				free(temp);
 			}
 			
-			s = {c, '\0'}
+			s[0] = c;
+			s[1] = '\0';
 			
 			strcat(SettingFileLine, s);
 		}

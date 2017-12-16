@@ -1,5 +1,7 @@
-/* Standard Library */
+/* Standard Libraries */
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 /* Header file */
 #include "macros.h"
@@ -52,7 +54,7 @@ CommandProcess
 	
 	sprintf(format, "%%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us", COMMAND_MAX, COMMAND_MAX,
 		COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX,
-		COMMAND_MAX, COMMAND_MAX)
+		COMMAND_MAX, COMMAND_MAX);
 	
 	CommandNumber = sscanf(command, format, commands[0], commands[1], commands[2], commands[3],
 		commands[4], commands[5], commands[6], commands[7], commands[8], commands[9], commands[10]);
@@ -68,9 +70,9 @@ CommandProcess
 	else if(!strcmp(commands[0], "cudir"))
 		return command_cudir();
 	else if(!strcmp(commands[0], "mfile"))
-		return command_mkfile(CommandNumber, commands[1]);
+		return command_mfile(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "rfile"))
-		return command_rmfile(CommandNumber, commands[1])
+		return command_rfile(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "cpfile"))
 		return command_cpfile(CommandNumber, commands[1], commands[2]);
 	else if(!strcmp(commands[0], "lfile"))
@@ -82,7 +84,7 @@ CommandProcess
 	else if(!strcmp(commands[0], "version"))
 		return command_version();
 	else if(!strcmp(commands[0], "app"))
-		return command_app(CommandNumber, commands)
+		return command_app(CommandNumber, (const char**)commands);
 	else if(!strcmp(commands[0], "date"))
 		return command_date();
 	else if(!strcmp(commands[0], "time"))

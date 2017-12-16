@@ -32,5 +32,5 @@ welcome
 	printf("Welcome to SCLS version %s.\n", VERSION);
 	
 	if(WriteLog)
-		log('w', "SCLS version %s\n", VERSION);
+		OutputLog('w', "SCLS version %s\n", VERSION);
 }
