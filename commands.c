@@ -866,7 +866,7 @@ command_time
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	printf("%u:%u:%u\n", local -> tm_hour, local -> tm_min, local -> tm_sec);
+	printf("%d:%02d:%02d\n", local -> tm_hour, local -> tm_min, local -> tm_sec);
 	
 	return 0;
 }
