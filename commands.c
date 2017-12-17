@@ -897,12 +897,86 @@ command_now
 {
 	time_t	timer;
 	struct tm	*local;
+	char		month[MONTH_MAX], day[DAY_MAX];
 	
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	printf("%u/%u/%u %u:%u:%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
-		local -> tm_sec);
+	switch(local -> tm_mon)
+	{
+	case 0:
+		strcpy(month, "January");
+		break;
+		
+	case 1:
+		strcpy(month, "February");
+		break;
+		
+	case 2:
+		strcpy(month, "March");
+		break;
+		
+	case 3:
+		strcpy(month, "April");
+		break;
+		
+	case 4:
+		strcpy(month, "May");
+		break;
+		
+	case 5:
+		strcpy(month, "June");
+		break;
+		
+	case 6:
+		strcpy(month, "July");
+		break;
+		
+	case 7:
+		strcpy(month, "August");
+		break;
+		
+	case 8:
+		strcpy(month, "September");
+		break;
+		
+	case 9:
+		strcpy(month, "October");
+		break;
+		
+	case 10:
+		strcpy(month, "November");
+		break;
+		
+	case 11:
+		strcpy(month, "December");
+		break;
+	}
+	
+	switch(local -> tm_mday)
+	{
+	case 1:
+	case 21:
+	case 31:
+		sprintf(day, "%dst", local -> tm_mday);
+		break;
+		
+	case 2:
+	case 22:
+		sprintf(day, "%dnd", local -> tm_mday);
+		break;
+		
+	case 3:
+	case 23:
+		sprintf(day, "%drd", local -> tm_mday);
+		break;
+		
+	default:
+		sprintf(day, "%dth", local -> tm_mday);
+		break;
+	}
+	
+	printf("%s %s, %d %d:%02d:%02d\n", month, day, local -> tm_year + 1900, local -> tm_hour, local -> tm_min, local -> tm_sec);
 	
 	return 0;
 }
