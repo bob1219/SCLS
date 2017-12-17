@@ -684,36 +684,15 @@ int			CommandNumber,
 const char	**commands
 )
 {
-	char	*cmd, *temp;
+	char	cmd[COMMAND_MAX] = "";
 	int	r;
 	
 	if(!system(NULL))goto app_error;
 	
-	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
-	if(!cmd)goto app_error;
-	
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
-	{
-		if((strlen(cmd) + strlen(commands[i]) + 2) > COMMAND_MAX)
-		{
-			temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + strlen(commands[i]) + 2));
-			
-			if(!temp)
-			{
-				free(cmd);
-				goto app_error;
-			}
-			cmd = temp;
-			free(temp);
-		}
-		
 		sprintf(cmd, "%s %s", cmd, commands[i]);
-	}
 	
 	r = system(cmd);
-	
-	/* Free memory */
-	free(cmd);
 	
 	if(WriteLog)
 		OutputLog('a', "Executed a application \"%s\", Return value is %d.\n", commands[1], r);
