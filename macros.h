@@ -11,5 +11,7 @@
 #define VERSION			"1.1"
 #define COMMAND_MAX		100
 #define COMMAND_NUMBER_MAX	11
+#define MONTH_MAX		10
+#define DAY_MAX			5
 
 #endif
