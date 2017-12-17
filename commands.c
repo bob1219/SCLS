@@ -59,7 +59,7 @@ const char	*DirectoryName
 	
 mdir_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed make a directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed make a directory.\n");
 	return 1;
 }
 
@@ -109,7 +109,7 @@ const char	*DirectoryName
 	
 rdir_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed remove a directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed remove a directory.\n");
 	return 1;
 }
 
@@ -164,7 +164,7 @@ const char	*newname
 	
 rename_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed rename \"%s\" -> \"%s\".\n", oldname, newname);
+		OutputLog('a', "Failed rename.\n");
 	return 1;
 }
 
@@ -214,7 +214,7 @@ const char	*DirectoryName
 	
 chdir_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed change current directory to \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed change current directory.\n");
 	return 1;
 }
 
@@ -312,7 +312,7 @@ const char	*FileName
 	
 mfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed make a file \"%s\".\n", FileName);
+		OutputLog('a', "Failed make a file.\n");
 	return 1;
 }
 
@@ -362,7 +362,7 @@ const char	*FileName
 	
 rfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed remove a file \"%s\".\n", FileName);
+		OutputLog('a', "Failed remove a file.\n");
 	return 1;
 }
 
@@ -432,7 +432,7 @@ const char	*to
 	
 cpfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed copy file \"%s\" -> \"%s\".\n", from, to);
+		OutputLog('a', "Failed copy file.\n");
 	return 1;
 }
 
@@ -491,7 +491,7 @@ const char	*DirectoryName
 	
 lfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed print list of file in directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed print list of file.\n");
 	return 1;
 }
 
@@ -554,7 +554,7 @@ const char	*FileName
 	
 tview_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed print contents of a text-file \"%s\".\n", FileName);
+		OutputLog('a', "Failed print contents of a text-file.\n");
 	return 1;
 }
 
@@ -618,7 +618,7 @@ const char	*FileName
 	
 bview_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed print contents of a binary-file \"%s\".\n", FileName);
+		OutputLog('a', "Failed print contents of a binary-file.\n");
 	return 1;
 }
 
@@ -684,36 +684,15 @@ int			CommandNumber,
 const char	**commands
 )
 {
-	char	*cmd, *temp;
+	char	cmd[COMMAND_MAX] = "";
 	int	r;
 	
 	if(!system(NULL))goto app_error;
 	
-	cmd = (char*)calloc(COMMAND_MAX, sizeof(char));
-	if(!cmd)goto app_error;
-	
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
-	{
-		if((strlen(cmd) + strlen(commands[i]) + 2) > COMMAND_MAX)
-		{
-			temp = (char*)realloc(cmd, sizeof(char) * (strlen(cmd) + strlen(commands[i]) + 2));
-			
-			if(!temp)
-			{
-				free(cmd);
-				goto app_error;
-			}
-			cmd = temp;
-			free(temp);
-		}
-		
 		sprintf(cmd, "%s %s", cmd, commands[i]);
-	}
 	
 	r = system(cmd);
-	
-	/* Free memory */
-	free(cmd);
 	
 	if(WriteLog)
 		OutputLog('a', "Executed a application \"%s\", Return value is %d.\n", commands[1], r);
@@ -721,7 +700,7 @@ const char	**commands
 	
 app_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed execution a application \"%s\".\n", commands[1]);
+		OutputLog('a', "Failed execution a application.\n");
 	return 1;
 }
 
@@ -752,11 +731,86 @@ command_date
 {
 	time_t	timer;
 	struct tm	*local;
+	char		month[MONTH_MAX], day[DAY_MAX];
 	
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	printf("%u/%u/%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900);
+	switch(local -> tm_mon)
+	{
+	case 0:
+		strcpy(month, "January");
+		break;
+		
+	case 1:
+		strcpy(month, "February");
+		break;
+		
+	case 2:
+		strcpy(month, "March");
+		break;
+		
+	case 3:
+		strcpy(month, "April");
+		break;
+		
+	case 4:
+		strcpy(month, "May");
+		break;
+		
+	case 5:
+		strcpy(month, "June");
+		break;
+		
+	case 6:
+		strcpy(month, "July");
+		break;
+		
+	case 7:
+		strcpy(month, "August");
+		break;
+		
+	case 8:
+		strcpy(month, "September");
+		break;
+		
+	case 9:
+		strcpy(month, "October");
+		break;
+		
+	case 10:
+		strcpy(month, "November");
+		break;
+		
+	case 11:
+		strcpy(month, "December");
+		break;
+	}
+	
+	switch(local -> tm_mday)
+	{
+	case 1:
+	case 21:
+	case 31:
+		sprintf(day, "%dst", local -> tm_mday);
+		break;
+		
+	case 2:
+	case 22:
+		sprintf(day, "%dnd", local -> tm_mday);
+		break;
+		
+	case 3:
+	case 23:
+		sprintf(day, "%drd", local -> tm_mday);
+		break;
+		
+	default:
+		sprintf(day, "%dth", local -> tm_mday);
+		break;
+	}
+	
+	printf("%s %s, %d\n", month, day, local -> tm_year + 1900);
 	
 	return 0;
 }
@@ -791,7 +845,7 @@ command_time
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	printf("%u:%u:%u\n", local -> tm_hour, local -> tm_min, local -> tm_sec);
+	printf("%d:%02d:%02d\n", local -> tm_hour, local -> tm_min, local -> tm_sec);
 	
 	return 0;
 }
@@ -822,12 +876,86 @@ command_now
 {
 	time_t	timer;
 	struct tm	*local;
+	char		month[MONTH_MAX], day[DAY_MAX];
 	
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	printf("%u/%u/%u %u:%u:%u\n", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
-		local -> tm_sec);
+	switch(local -> tm_mon)
+	{
+	case 0:
+		strcpy(month, "January");
+		break;
+		
+	case 1:
+		strcpy(month, "February");
+		break;
+		
+	case 2:
+		strcpy(month, "March");
+		break;
+		
+	case 3:
+		strcpy(month, "April");
+		break;
+		
+	case 4:
+		strcpy(month, "May");
+		break;
+		
+	case 5:
+		strcpy(month, "June");
+		break;
+		
+	case 6:
+		strcpy(month, "July");
+		break;
+		
+	case 7:
+		strcpy(month, "August");
+		break;
+		
+	case 8:
+		strcpy(month, "September");
+		break;
+		
+	case 9:
+		strcpy(month, "October");
+		break;
+		
+	case 10:
+		strcpy(month, "November");
+		break;
+		
+	case 11:
+		strcpy(month, "December");
+		break;
+	}
+	
+	switch(local -> tm_mday)
+	{
+	case 1:
+	case 21:
+	case 31:
+		sprintf(day, "%dst", local -> tm_mday);
+		break;
+		
+	case 2:
+	case 22:
+		sprintf(day, "%dnd", local -> tm_mday);
+		break;
+		
+	case 3:
+	case 23:
+		sprintf(day, "%drd", local -> tm_mday);
+		break;
+		
+	default:
+		sprintf(day, "%dth", local -> tm_mday);
+		break;
+	}
+	
+	printf("%s %s, %d %d:%02d:%02d\n", month, day, local -> tm_year + 1900, local -> tm_hour, local -> tm_min, local -> tm_sec);
 	
 	return 0;
 }

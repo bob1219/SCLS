@@ -67,7 +67,7 @@ const char	*format,
 	timer = time(NULL);
 	local = localtime(&timer);
 	
-	sprintf(path, "%s%c%u-%u-%u.log", LogDirectory, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_mday,
+	sprintf(path, "%s%c%02d-%02d-%d.log", LogDirectory, PATH_BREAK_CHARACTER, local -> tm_mon + 1, local -> tm_mday,
 		local -> tm_year + 1900);
 	
 	/* Open file */
@@ -75,7 +75,7 @@ const char	*format,
 	
 	if(!FilePointer)goto log_error;
 	
-	fprintf(FilePointer, "[%u/%u/%u %u:%u:%u]", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
+	fprintf(FilePointer, "[%d/%02d/%d %d:%02d:%02d]", local -> tm_mon + 1, local -> tm_mday, local -> tm_year + 1900, local -> tm_hour, local -> tm_min,
 		local -> tm_sec);
 	
 	va_start(args, format);
