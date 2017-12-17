@@ -59,7 +59,7 @@ const char	*DirectoryName
 	
 mdir_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed make a directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed make a directory.\n");
 	return 1;
 }
 
@@ -109,7 +109,7 @@ const char	*DirectoryName
 	
 rdir_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed remove a directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed remove a directory.\n");
 	return 1;
 }
 
@@ -164,7 +164,7 @@ const char	*newname
 	
 rename_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed rename \"%s\" -> \"%s\".\n", oldname, newname);
+		OutputLog('a', "Failed rename.\n");
 	return 1;
 }
 
@@ -214,7 +214,7 @@ const char	*DirectoryName
 	
 chdir_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed change current directory to \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed change current directory.\n");
 	return 1;
 }
 
@@ -312,7 +312,7 @@ const char	*FileName
 	
 mfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed make a file \"%s\".\n", FileName);
+		OutputLog('a', "Failed make a file.\n");
 	return 1;
 }
 
@@ -362,7 +362,7 @@ const char	*FileName
 	
 rfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed remove a file \"%s\".\n", FileName);
+		OutputLog('a', "Failed remove a file.\n");
 	return 1;
 }
 
@@ -432,7 +432,7 @@ const char	*to
 	
 cpfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed copy file \"%s\" -> \"%s\".\n", from, to);
+		OutputLog('a', "Failed copy file.\n");
 	return 1;
 }
 
@@ -491,7 +491,7 @@ const char	*DirectoryName
 	
 lfile_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed print list of file in directory \"%s\".\n", DirectoryName);
+		OutputLog('a', "Failed print list of file.\n");
 	return 1;
 }
 
@@ -554,7 +554,7 @@ const char	*FileName
 	
 tview_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed print contents of a text-file \"%s\".\n", FileName);
+		OutputLog('a', "Failed print contents of a text-file.\n");
 	return 1;
 }
 
@@ -618,7 +618,7 @@ const char	*FileName
 	
 bview_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed print contents of a binary-file \"%s\".\n", FileName);
+		OutputLog('a', "Failed print contents of a binary-file.\n");
 	return 1;
 }
 
@@ -721,7 +721,7 @@ const char	**commands
 	
 app_error:;
 	if(WriteLog)
-		OutputLog('a', "Failed execution a application \"%s\".\n", commands[1]);
+		OutputLog('a', "Failed execution a application.\n");
 	return 1;
 }
 
