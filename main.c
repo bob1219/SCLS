@@ -12,7 +12,9 @@
  * Nothing
  *
  * [Return value]
- * type: int
+ * type: 	int
+ * success:	EXIT_SUCCESS
+ * failure:	EXIT_FAILURE
  *
  * [Arguments]
  * Nothing
@@ -24,16 +26,34 @@
  * prepering function
  * welcome function
  * CommandLine function
+ * script function
  */
 
 int
 main
-(void)
+(
+int	argc,
+char	**argv
+)
 {
 	if(prepering())
 	{
 		fprintf(stderr, "Failed prepering.\n");
 		abort();
+	}
+
+	if(argc > 1)
+	{
+		if(!script(argv[1]))
+		{
+			printf("Succeeded script.\n");
+			return EXIT_SUCCESS;
+		}
+		else
+		{
+			fprintf(stderr, "Failed script.\n");
+			return EXIT_FAILURE;
+		}
 	}
 	
 	welcome();
