@@ -125,4 +125,11 @@ int
 command_now
 (void);
 
+int
+command_echo
+(
+int,
+const char**
+);
+
 #endif

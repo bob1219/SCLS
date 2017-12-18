@@ -959,3 +959,20 @@ command_now
 	
 	return 0;
 }
+
+int
+command_echo
+(
+int		CommandNumber,
+const char	**commands
+)
+{
+	char	text[TEXT_MAX] = "";
+
+	for(unsigned int i = 1 ; i < CommandNumber ; i++)
+		sprintf(text, "%s %s", text, commands[i]);
+
+	printf("%s\n", text);
+
+	return 0;	
+}
