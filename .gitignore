@@ -2,3 +2,4 @@
 *.txt
 build.cmd
 *.o
+*.swp
