@@ -839,7 +839,7 @@ int
 command_time
 (void)
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	
 	timer = time(NULL);
@@ -874,7 +874,7 @@ int
 command_now
 (void)
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	char		month[MONTH_MAX], day[DAY_MAX];
 	
@@ -967,10 +967,13 @@ int		CommandNumber,
 const char	**commands
 )
 {
-	char	text[TEXT_MAX] = "";
+	char	text[TEXT_MAX];
 
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
-		sprintf(text, "%s %s", text, commands[i]);
+	{
+		if(i == 1)strcpy(text, commands[i]);
+		else sprintf(text, "%s %s", text, commands[i]);
+	}
 
 	printf("%s\n", text);
 
