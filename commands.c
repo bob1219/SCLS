@@ -26,11 +26,11 @@
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of directory
  *
  * [Call from]
@@ -43,7 +43,7 @@
 int
 command_mdir
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
@@ -76,11 +76,11 @@ mdir_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of directory
  *
  * [Call from]
@@ -93,7 +93,7 @@ mdir_error:;
 int
 command_rdir
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
@@ -126,15 +126,15 @@ rdir_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	oldname
- *	type:			const char*
+ *	type:		const char*
  *	description:	Old name of target directory or file
  *
  * -	newname
- *	type:			const char*
+ *	type:		const char*
  *	description:	New name of target directory or file
  *
  * [Call from]
@@ -147,7 +147,7 @@ rdir_error:;
 int
 command_rename
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*oldname,
 const char	*newname
 )
@@ -181,11 +181,11 @@ rename_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of directory
  *
  * [Call from]
@@ -198,7 +198,7 @@ rename_error:;
 int
 command_chdir
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
@@ -274,11 +274,11 @@ command_cudir
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	FileName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of file
  *
  * [Call from]
@@ -291,7 +291,7 @@ command_cudir
 int
 command_mfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -329,11 +329,11 @@ mfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	FileName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of file
  *
  * [Call from]
@@ -346,7 +346,7 @@ mfile_error:;
 int
 command_rfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -379,15 +379,15 @@ rfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	from
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of copy source file
  *
  * -	to
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of copy destination file
  *
  * [Call from]
@@ -400,7 +400,7 @@ rfile_error:;
 int
 command_cpfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*from,
 const char	*to
 )
@@ -449,11 +449,11 @@ cpfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of directory
  *
  * [Call from]
@@ -466,11 +466,11 @@ cpfile_error:;
 int
 command_lfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
-	DIR			*DirectoryPointer;
+	DIR		*DirectoryPointer;
 	struct dirent	*directory;
 	
 	if(CommandNumber < 2)goto lfile_error;
@@ -508,11 +508,11 @@ lfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	FileName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of file
  *
  * [Call from]
@@ -525,7 +525,7 @@ lfile_error:;
 int
 command_tview
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -571,11 +571,11 @@ tview_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	FileName
- *	type:			const char*
+ *	type:		const char*
  *	description:	Name of file
  *
  * [Call from]
@@ -588,7 +588,7 @@ tview_error:;
 int
 command_bview
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -663,11 +663,11 @@ command_version
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
+ *	type:		int
  *	description:	Number of command
  *
  * -	commands
- *	type:			const char**
+ *	type:		const char**
  *	description:	commands
  *
  * [Call from]
@@ -680,7 +680,7 @@ command_version
 int
 command_app
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	**commands
 )
 {
@@ -729,7 +729,7 @@ int
 command_date
 (void)
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	char		month[MONTH_MAX], day[DAY_MAX];
 	

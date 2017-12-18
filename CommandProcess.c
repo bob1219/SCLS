@@ -20,7 +20,7 @@
  *
  * [Arguments]
  * -	command
- *	type:			const char*
+ *	type:		const char*
  *	description:	command
  *
  * [Call from]
