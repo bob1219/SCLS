@@ -44,7 +44,7 @@ char	**argv
 
 	if(argc > 1)
 	{
-		if(!script(argv[1]))
+		if(!script(argc, argv[1]))
 		{
 			printf("Succeeded script.\n");
 			return EXIT_SUCCESS;

@@ -43,6 +43,7 @@
  * command_date function
  * command_time function
  * command_now function
+ * script function
  */
 
 int
@@ -97,6 +98,8 @@ CommandProcess
 		exit(EXIT_SUCCESS);
 	else if(!strcmp(commands[0], "echo"))
 		return command_echo(CommandNumber, (const char**)a);
+	else if(!strcmp(commands[0], "script"))
+		return script(CommandNumber, commands[1]);
 	else
 	{
 		fprintf(stderr, "Unknown command \"%s\".\n", commands[0]);

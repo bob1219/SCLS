@@ -132,4 +132,11 @@ int,
 const char**
 );
 
+int
+script
+(
+int,
+const char*
+);
+
 #endif
