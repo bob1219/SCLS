@@ -78,6 +78,18 @@ Print current date and time
 Exit SCLS  
 `exit`  
 
+* echo  
+Print a text  
+`echo [text]`  
+
+* pause
+Pause  
+`pause`  
+
+* script  
+Run a script  
+`script [file-name]`  
+
 files and directories
 ---------------------
 * logs/  
@@ -128,6 +140,9 @@ Header file
 * welcome.c  
 Source file  
 
+* script.c  
+Source file  
+
 History
 --------
 * Version 1.0 (December 16th, 2017)  
@@ -141,4 +156,9 @@ History
     * Modify format of output in date command  
     * Modify format of output in time command  
     * Modify format of output in now command  
-    * Delete needless VLA in app command  
+    * Delete needless VLA in app command 
+	
+* Version 2.0 (December 19th, 2017)
+	* Addition echo command  
+	* Addition pause command  
+	* Addition script command   
