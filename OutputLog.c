@@ -20,12 +20,12 @@
  *
  * [Arguments]
  * -	mode
- *	type:		char
- *	description:	Mode of file open
+ *		type:			char
+ *		description:	Mode of file open
  *
  * -	format
- *	type:		const char*
- *	description:	format of vfprintf
+ *		type:			const char*
+ *		description:	format of vfprintf
  *
  * [Call from]
  * welcome function

@@ -37,7 +37,7 @@ prepering
 (void)
 {
 	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-		SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX];
+			SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX];
 	FILE	*SettingFilePointer;
 	int	c;
 	

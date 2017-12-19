@@ -20,8 +20,8 @@
  *
  * [Arguments]
  * -	command
- *	type:		const char*
- *	description:	command
+ *		type:			const char*
+ *		description:	command
  *
  * [Call from]
  * CommandLine function

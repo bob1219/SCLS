@@ -26,12 +26,12 @@
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:		const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -76,12 +76,12 @@ mdir_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:		const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -126,16 +126,16 @@ rdir_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	oldname
- *	type:		const char*
- *	description:	Old name of target directory or file
+ *		type:			const char*
+ *		description:	Old name of target directory or file
  *
  * -	newname
- *	type:		const char*
- *	description:	New name of target directory or file
+ *		type:			const char*
+ *		description:	New name of target directory or file
  *
  * [Call from]
  * CommandProcess function
@@ -181,12 +181,12 @@ rename_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:		const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -274,12 +274,12 @@ command_cudir
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:		const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -329,12 +329,12 @@ mfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:		const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -379,16 +379,16 @@ rfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	from
- *	type:		const char*
- *	description:	Name of copy source file
+ *		type:			const char*
+ *		description:	Name of copy source file
  *
  * -	to
- *	type:		const char*
- *	description:	Name of copy destination file
+ *		type:			const char*
+ *		description:	Name of copy destination file
  *
  * [Call from]
  * CommandProcess function
@@ -400,7 +400,7 @@ rfile_error:;
 int
 command_cpfile
 (
-int		CommandNumber,
+int			CommandNumber,
 const char	*from,
 const char	*to
 )
@@ -449,12 +449,12 @@ cpfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:		const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -466,11 +466,11 @@ cpfile_error:;
 int
 command_lfile
 (
-int		CommandNumber,
+int			CommandNumber,
 const char	*DirectoryName
 )
 {
-	DIR		*DirectoryPointer;
+	DIR				*DirectoryPointer;
 	struct dirent	*directory;
 	
 	if(CommandNumber < 2)goto lfile_error;
@@ -508,12 +508,12 @@ lfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:		const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -525,7 +525,7 @@ lfile_error:;
 int
 command_tview
 (
-int		CommandNumber,
+int			CommandNumber,
 const char	*FileName
 )
 {
@@ -571,12 +571,12 @@ tview_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:		const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -588,7 +588,7 @@ tview_error:;
 int
 command_bview
 (
-int		CommandNumber,
+int			CommandNumber,
 const char	*FileName
 )
 {
@@ -663,12 +663,12 @@ command_version
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	commands
- *	type:		const char**
- *	description:	commands
+ *		type:			const char**
+ *		description:	commands
  *
  * [Call from]
  * CommandProcess function
@@ -680,7 +680,7 @@ command_version
 int
 command_app
 (
-int		CommandNumber,
+int			CommandNumber,
 const char	**commands
 )
 {

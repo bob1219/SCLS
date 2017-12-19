@@ -19,8 +19,8 @@
  *
  * [Arguments]
  * -	CommandNumber
- *	type:		int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -    filename
  *      type:           const char*
@@ -37,7 +37,7 @@
 int
 script
 (
-int		CommandNumber,
+int			CommandNumber,
 const char	*filename
 )
 {
