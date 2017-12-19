@@ -20,12 +20,12 @@
  *
  * [Arguments]
  * -	mode
- *	type:			char
- *	description:	Mode of file open
+ *		type:			char
+ *		description:	Mode of file open
  *
  * -	format
- *	type:			const char*
- *	description:	format of vfprintf
+ *		type:			const char*
+ *		description:	format of vfprintf
  *
  * [Call from]
  * welcome function
@@ -53,16 +53,16 @@
 int
 OutputLog
 (
-char			mode,
+char		mode,
 const char	*format,
 ...
 )
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	char		path[FILENAME_MAX];
 	FILE		*FilePointer;
-	va_list	args;
+	va_list		args;
 	
 	timer = time(NULL);
 	local = localtime(&timer);

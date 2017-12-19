@@ -26,12 +26,12 @@
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -43,7 +43,7 @@
 int
 command_mdir
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
@@ -76,12 +76,12 @@ mdir_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -93,7 +93,7 @@ mdir_error:;
 int
 command_rdir
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
@@ -126,16 +126,16 @@ rdir_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	oldname
- *	type:			const char*
- *	description:	Old name of target directory or file
+ *		type:			const char*
+ *		description:	Old name of target directory or file
  *
  * -	newname
- *	type:			const char*
- *	description:	New name of target directory or file
+ *		type:			const char*
+ *		description:	New name of target directory or file
  *
  * [Call from]
  * CommandProcess function
@@ -147,7 +147,7 @@ rdir_error:;
 int
 command_rename
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*oldname,
 const char	*newname
 )
@@ -181,12 +181,12 @@ rename_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -198,7 +198,7 @@ rename_error:;
 int
 command_chdir
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
@@ -274,12 +274,12 @@ command_cudir
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:			const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -291,7 +291,7 @@ command_cudir
 int
 command_mfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -329,12 +329,12 @@ mfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:			const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -346,7 +346,7 @@ mfile_error:;
 int
 command_rfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -379,16 +379,16 @@ rfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	from
- *	type:			const char*
- *	description:	Name of copy source file
+ *		type:			const char*
+ *		description:	Name of copy source file
  *
  * -	to
- *	type:			const char*
- *	description:	Name of copy destination file
+ *		type:			const char*
+ *		description:	Name of copy destination file
  *
  * [Call from]
  * CommandProcess function
@@ -449,12 +449,12 @@ cpfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	DirectoryName
- *	type:			const char*
- *	description:	Name of directory
+ *		type:			const char*
+ *		description:	Name of directory
  *
  * [Call from]
  * CommandProcess function
@@ -470,7 +470,7 @@ int			CommandNumber,
 const char	*DirectoryName
 )
 {
-	DIR			*DirectoryPointer;
+	DIR				*DirectoryPointer;
 	struct dirent	*directory;
 	
 	if(CommandNumber < 2)goto lfile_error;
@@ -508,12 +508,12 @@ lfile_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:			const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -571,12 +571,12 @@ tview_error:;
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	FileName
- *	type:			const char*
- *	description:	Name of file
+ *		type:			const char*
+ *		description:	Name of file
  *
  * [Call from]
  * CommandProcess function
@@ -663,12 +663,12 @@ command_version
  *
  * [Arguments]
  * -	CommandNumber
- *	type:			int
- *	description:	Number of command
+ *		type:			int
+ *		description:	Number of command
  *
  * -	commands
- *	type:			const char**
- *	description:	commands
+ *		type:			const char**
+ *		description:	commands
  *
  * [Call from]
  * CommandProcess function
@@ -729,7 +729,7 @@ int
 command_date
 (void)
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	char		month[MONTH_MAX], day[DAY_MAX];
 	
@@ -839,7 +839,7 @@ int
 command_time
 (void)
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	
 	timer = time(NULL);
@@ -874,7 +874,7 @@ int
 command_now
 (void)
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	char		month[MONTH_MAX], day[DAY_MAX];
 	
@@ -957,5 +957,55 @@ command_now
 	
 	printf("%s %s, %d %d:%02d:%02d\n", month, day, local -> tm_year + 1900, local -> tm_hour, local -> tm_min, local -> tm_sec);
 	
+	return 0;
+}
+
+int
+command_echo
+(
+int		CommandNumber,
+const char	**commands
+)
+{
+	char	text[TEXT_MAX];
+
+	for(unsigned int i = 1 ; i < CommandNumber ; i++)
+	{
+		if(i == 1)strcpy(text, commands[i]);
+		else sprintf(text, "%s %s", text, commands[i]);
+	}
+
+	printf("%s\n", text);
+
+	return 0;	
+}
+
+/*
+ * command_pause
+ *
+ * [Description]
+ * Pause
+ *
+ * [Return value]
+ * type:	int
+ * success:	0
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
+int
+command_pause
+(void)
+{
+	printf("Press ENTER key to continue...");
+	getchar();
+
 	return 0;
 }
