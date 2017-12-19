@@ -18,6 +18,10 @@
  * failure:     1
  *
  * [Arguments]
+ * -	CommandNumber
+ *	type:		int
+ *	description:	Number of command
+ *
  * -    filename
  *      type:           const char*
  *      description:    Name of file
@@ -32,10 +36,15 @@
 
 int
 script
-(const char *filename)
+(
+int		CommandNumber,
+const char	*filename
+)
 {
 	FILE	*FilePointer;
 	char	FileLine[FILE_LINE_MAX];
+	
+	if(CommandNumber < 2)return 1;
 
 	/* Open file */
 	FilePointer = fopen(filename, "r");
