@@ -979,3 +979,33 @@ const char	**commands
 
 	return 0;	
 }
+
+/*
+ * command_pause
+ *
+ * [Description]
+ * Pause
+ *
+ * [Return value]
+ * type:	int
+ * success:	0
+ *
+ * [Arguments]
+ * Nothing
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
+int
+command_pause
+(void)
+{
+	printf("Press ENTER key to continue...");
+	getchar();
+
+	return 0;
+}

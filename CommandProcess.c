@@ -100,6 +100,8 @@ CommandProcess
 		return command_echo(CommandNumber, (const char**)a);
 	else if(!strcmp(commands[0], "script"))
 		return script(CommandNumber, commands[1]);
+	else if(!strcmp(commands[0], "pause"))
+		return command_pause();
 	else
 	{
 		fprintf(stderr, "Unknown command \"%s\".\n", commands[0]);
