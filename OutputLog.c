@@ -20,11 +20,11 @@
  *
  * [Arguments]
  * -	mode
- *	type:			char
+ *	type:		char
  *	description:	Mode of file open
  *
  * -	format
- *	type:			const char*
+ *	type:		const char*
  *	description:	format of vfprintf
  *
  * [Call from]
@@ -53,16 +53,16 @@
 int
 OutputLog
 (
-char			mode,
+char		mode,
 const char	*format,
 ...
 )
 {
-	time_t	timer;
+	time_t		timer;
 	struct tm	*local;
 	char		path[FILENAME_MAX];
 	FILE		*FilePointer;
-	va_list	args;
+	va_list		args;
 	
 	timer = time(NULL);
 	local = localtime(&timer);

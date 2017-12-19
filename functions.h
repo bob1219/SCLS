@@ -125,4 +125,22 @@ int
 command_now
 (void);
 
+int
+command_echo
+(
+int,
+const char**
+);
+
+int
+script
+(
+int,
+const char*
+);
+
+int
+command_pause
+(void);
+
 #endif
