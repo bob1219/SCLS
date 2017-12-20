@@ -14,5 +14,6 @@
 #define MONTH_MAX		10
 #define DAY_MAX			5
 #define TEXT_MAX		COMMAND_MAX
+#define EXECUTABLE_FILE_NAME	"scls.exe"
 
 #endif

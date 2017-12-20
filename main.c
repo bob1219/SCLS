@@ -36,7 +36,7 @@ int	argc,
 char	**argv
 )
 {
-	if(prepering())
+	if(prepering(argv[0]))
 	{
 		fprintf(stderr, "Failed prepering.\n");
 		abort();
