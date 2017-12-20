@@ -15,9 +15,9 @@
  * Prepering SCLS
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * Nothing

@@ -19,12 +19,12 @@
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
- * -    filename
- *      type:           const char*
- *      description:    Name of file
+ * -	filename
+ *		type:		const char*
+ *		description:	Name of file
  *
  * [Call from]
  * main function
@@ -37,7 +37,7 @@
 int
 script
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*filename
 )
 {

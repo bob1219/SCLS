@@ -12,7 +12,7 @@
  * Nothing
  *
  * [Return value]
- * type: 	int
+ * type:	int
  * success:	EXIT_SUCCESS
  * failure:	EXIT_FAILURE
  *

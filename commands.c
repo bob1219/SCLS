@@ -20,17 +20,17 @@
  * Make a directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	DirectoryName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of directory
  *
  * [Call from]
@@ -70,17 +70,17 @@ mdir_error:;
  * Remove a directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	DirectoryName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of directory
  *
  * [Call from]
@@ -120,21 +120,21 @@ rdir_error:;
  * Rename a file or directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	oldname
- *		type:			const char*
+ *		type:		const char*
  *		description:	Old name of target directory or file
  *
  * -	newname
- *		type:			const char*
+ *		type:		const char*
  *		description:	New name of target directory or file
  *
  * [Call from]
@@ -175,17 +175,17 @@ rename_error:;
  * Change current directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	DirectoryName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of directory
  *
  * [Call from]
@@ -225,9 +225,9 @@ chdir_error:;
  * Print current directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * Nothing
@@ -268,17 +268,17 @@ command_cudir
  * Make a file
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	FileName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of file
  *
  * [Call from]
@@ -323,17 +323,17 @@ mfile_error:;
  * Remove a file
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	FileName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of file
  *
  * [Call from]
@@ -373,21 +373,21 @@ rfile_error:;
  * Copy a file
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	from
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of copy source file
  *
  * -	to
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of copy destination file
  *
  * [Call from]
@@ -400,13 +400,13 @@ rfile_error:;
 int
 command_cpfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*from,
 const char	*to
 )
 {
-	FILE		*FromFilePointer, *ToFilePointer;
-	BYTE		b;
+	FILE	*FromFilePointer, *ToFilePointer;
+	BYTE	b;
 	
 	if(CommandNumber < 3)goto cpfile_error;
 	
@@ -443,17 +443,17 @@ cpfile_error:;
  * Print list of in current directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	DirectoryName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of directory
  *
  * [Call from]
@@ -466,11 +466,11 @@ cpfile_error:;
 int
 command_lfile
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*DirectoryName
 )
 {
-	DIR				*DirectoryPointer;
+	DIR		*DirectoryPointer;
 	struct dirent	*directory;
 	
 	if(CommandNumber < 2)goto lfile_error;
@@ -502,17 +502,17 @@ lfile_error:;
  * Print contents of a text file
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	FileName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of file
  *
  * [Call from]
@@ -525,7 +525,7 @@ lfile_error:;
 int
 command_tview
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
@@ -565,17 +565,17 @@ tview_error:;
  * Print list of in current directory
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	FileName
- *		type:			const char*
+ *		type:		const char*
  *		description:	Name of file
  *
  * [Call from]
@@ -588,12 +588,12 @@ tview_error:;
 int
 command_bview
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	*FileName
 )
 {
-	FILE		*FilePointer;
-	BYTE		b;
+	FILE	*FilePointer;
+	BYTE	b;
 	
 	if(CommandNumber < 2)goto bview_error;
 	
@@ -629,8 +629,8 @@ bview_error:;
  * Print version of SCLS
  *
  * [Return value]
- * type:		int
- * success:		0
+ * type:	int
+ * success:	0
  *
  * [Arguments]
  * Nothing
@@ -657,17 +657,17 @@ command_version
  * Execution a application
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	CommandNumber
- *		type:			int
+ *		type:		int
  *		description:	Number of command
  *
  * -	commands
- *		type:			const char**
+ *		type:		const char**
  *		description:	commands
  *
  * [Call from]
@@ -680,7 +680,7 @@ command_version
 int
 command_app
 (
-int			CommandNumber,
+int		CommandNumber,
 const char	**commands
 )
 {
@@ -711,9 +711,9 @@ app_error:;
  * Print current date
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * Nothing
@@ -822,8 +822,8 @@ command_date
  * Print current time
  *
  * [Return value]
- * type:		int
- * success:		0
+ * type:	int
+ * success:	0
  *
  * [Arguments]
  * Nothing
@@ -857,8 +857,8 @@ command_time
  * Print current date and time
  *
  * [Return value]
- * type:		int
- * success:		0
+ * type:	int
+ * success:	0
  *
  * [Arguments]
  * Nothing
