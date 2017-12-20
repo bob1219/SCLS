@@ -146,19 +146,23 @@ Source file
 History
 --------
 * Version 1.0 (December 16th, 2017)  
-    * First version  
+	* First version  
 
 * Version 1.1 (December 16th, 2017)  
-    * Addition a process of unknown command  
+	* Addition a process of unknown command  
 
 * Version 1.2 (December 17th, 2017)  
-    * Modify format of output in OutputLog command  
-    * Modify format of output in date command  
-    * Modify format of output in time command  
-    * Modify format of output in now command  
-    * Delete needless VLA in app command 
+	* Modify format of output in OutputLog command  
+	* Modify format of output in date command  
+	* Modify format of output in time command  
+	* Modify format of output in now command  
+	* Delete needless VLA in app command 
 	
-* Version 2.0 (December 19th, 2017)
+* Version 2.0 (December 19th, 2017)  
 	* Addition echo command  
 	* Addition pause command  
 	* Addition script command   
+
+* Version 2.1 (December 20th, 2017)  
+	* Bugfix prepering function
+	* Bugfix CommandProcess function
