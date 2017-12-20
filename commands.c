@@ -960,6 +960,33 @@ command_now
 	return 0;
 }
 
+/*
+ * command_echo
+ *
+ * [Description]
+ * Print a text
+ *
+ * [Return value]
+ * type:	int
+ * success:	0
+ * failure:	1
+ *
+ * [Arguments]
+ * -	CommandNumber
+ *  	type:		int
+ *  	description:	Number of command
+ *
+ * -	commands
+ *  	type:		const char**
+ *  	description:	commands
+ *
+ * [Call from]
+ * ComamndProcess function
+ *
+ * [Call to]
+ * Nothing
+ */
+
 int
 command_echo
 (
