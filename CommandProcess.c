@@ -59,6 +59,9 @@ CommandProcess
 	CommandNumber = sscanf(command, format, commands[0], commands[1], commands[2], commands[3], commands[4], commands[5], commands[6], commands[7], commands[8], commands[9], commands[10], commands[11], commands[12],
 			commands[13], commands[14], commands[15], commands[16], commands[17], commands[18], commands[19], commands[20]);
 	
+	if(CommandNumber == EOF)
+		strcpy(commands[0], "");
+
 	for(unsigned int i = 0 ; i < COMMAND_NUMBER_MAX ; i++)
 		a[i] = commands[i];
 	
