@@ -8,7 +8,7 @@
 #define SETTING_NAME_MAX	9
 #define SETTING_MAX		992
 #define PROMPT_MAX		SETTING_MAX
-#define VERSION			"2.0"
+#define VERSION			"2.1"
 #define COMMAND_MAX		100
 #define COMMAND_NUMBER_MAX	21
 #define MONTH_MAX		10
