@@ -15,12 +15,14 @@
  * Prepering SCLS
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
- * Nothing
+ * -	ExecutableFileName
+ *  	type:		const char*
+ *  	description:	Name of executable-file
  *
  * [Call from]
  * main function
@@ -34,20 +36,23 @@ char	prompt[PROMPT_MAX] = "", LogDirectory[FILENAME_MAX] = "";
 
 int
 prepering
-(void)
+(const char	*ExecutableFileName)
 {
 	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-			SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX];
+		SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX], *r;
 	FILE	*SettingFilePointer;
 	int	c;
+
+	strcpy(RootDirectory, ExecutableFileName);
+
+	r = strstr(RootDirectory, EXECUTABLE_FILE_NAME);
+	if(!r)return 1;
+
+	RootDirectory[(int)(r - RootDirectory)] = '\0';
+
+	sprintf(LogDirectory, "%slogs", RootDirectory);
 	
-	if(!getcwd(RootDirectory, FILENAME_MAX))
-		return 1;
-	if(RootDirectory[strlen(RootDirectory) - 1] == PATH_BREAK_CHARACTER)
-		RootDirectory[strlen(RootDirectory) - 1] = '\0';
-	sprintf(LogDirectory, "%s%clogs", RootDirectory, PATH_BREAK_CHARACTER);
-	
-	sprintf(SettingFilePath, ".%cSETTING", PATH_BREAK_CHARACTER);
+	sprintf(SettingFilePath, "%sSETTING", RootDirectory);
 	
 	/* Open file */
 	SettingFilePointer = fopen(SettingFilePath, "r");

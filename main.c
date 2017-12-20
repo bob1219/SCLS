@@ -12,7 +12,7 @@
  * Nothing
  *
  * [Return value]
- * type: 	int
+ * type:	int
  * success:	EXIT_SUCCESS
  * failure:	EXIT_FAILURE
  *
@@ -36,7 +36,7 @@ int	argc,
 char	**argv
 )
 {
-	if(prepering())
+	if(prepering(argv[0]))
 	{
 		fprintf(stderr, "Failed prepering.\n");
 		abort();

@@ -14,17 +14,17 @@
  * Write a log
  *
  * [Return value]
- * type:		int
- * success:		0
- * failure:		1
+ * type:	int
+ * success:	0
+ * failure:	1
  *
  * [Arguments]
  * -	mode
- *		type:			char
+ *		type:		char
  *		description:	Mode of file open
  *
  * -	format
- *		type:			const char*
+ *		type:		const char*
  *		description:	format of vfprintf
  *
  * [Call from]

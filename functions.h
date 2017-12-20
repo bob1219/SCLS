@@ -3,7 +3,7 @@
 
 int
 prepering
-(void);
+(const char*);
 
 void
 welcome
