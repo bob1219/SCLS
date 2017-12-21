@@ -32,14 +32,14 @@
  */
 
 bool	WriteLog = true;
-char	prompt[PROMPT_MAX] = "", LogDirectory[FILENAME_MAX] = "";
+char	prompt[PROMPT_MAX] = "", LogDirectory[FILENAME_MAX] = "", RootDirectory[FILENAME_MAX];
 
 int
 prepering
 (const char	*ExecutableFileName)
 {
 	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-		SettingContent[SETTING_MAX], RootDirectory[FILENAME_MAX], *r;
+		SettingContent[SETTING_MAX], *r;
 	FILE	*SettingFilePointer;
 	int	c;
 

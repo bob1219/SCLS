@@ -8,7 +8,7 @@
 /* Header file */
 #include "macros.h"
 
-extern char	prompt[PROMPT_MAX], LogDirectory[FILENAME_MAX];
+extern char	prompt[PROMPT_MAX], LogDirectory[FILENAME_MAX], RootDirectory[FILENAME_MAX];
 extern bool	WriteLog;
 
 #endif

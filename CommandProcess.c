@@ -105,6 +105,8 @@ CommandProcess
 		return script(CommandNumber, commands[1]);
 	else if(!strcmp(commands[0], "pause"))
 		return command_pause();
+	else if(!strcmp(commands[0], "path"))
+		return command_path(CommandNumber, commands[1], commands[2]);
 	else
 	{
 		fprintf(stderr, "Unknown command \"%s\".\n", commands[0]);

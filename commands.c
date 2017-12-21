@@ -1004,7 +1004,7 @@ const char	**commands
 
 	printf("%s\n", text);
 
-	return 0;	
+	return 0;
 }
 
 /*
@@ -1035,4 +1035,115 @@ command_pause
 	getchar();
 
 	return 0;
+}
+
+/*
+ * command_path
+ *
+ * [Description]
+ * Setting path
+ *
+ * [Return value]
+ * type:	int
+ * success:	0
+ * failure:	1
+ *
+ * [Arguments]
+ * -	CommandNumber
+ *  	type:		int
+ *  	description:	Number of command
+ *
+ * -	command
+ *  	type:		const char*
+ *  	description:	Command of path
+ *
+ * -	argument
+ *  	type:		const char*
+ *  	description:	Argument of path
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * OutputLog function
+ */
+
+int
+command_path
+(
+int		CommandNumber,
+const char	*command,
+const char	*argument
+)
+{
+	FILE	*FilePointer;
+	char	filename[FILENAME_MAX];
+
+	sprintf(filename, "%sPATH", RootDirectory);
+
+	if(!strcmp(command, "clear"))
+	{
+		FilePointer = fopen(filename, "w");
+		if(!FilePointer)
+		{
+			if(WriteLog)
+				OutputLog('a', "Failed clear path setting file.\n");
+			return 1;
+		}
+		else
+		{
+			fclose(FilePointer);
+			if(WriteLog)
+				OutputLog('a', "Cleared path setting file.\n");
+			return 0;
+		}
+	}
+	else if(!strcmp(command, "list"))
+	{
+		char	fileline[FILE_LINE_MAX];
+
+		/* Open file */
+		FilePointer = fopen(filename, "r");
+		if(!FilePointer)
+		{
+			if(WriteLog)
+				OutputLog('a', "Failed print list of path.\n");
+			return 1;
+		}
+
+		for(unsigned int i = 1 ; fgets(fileline, FILE_LINE_MAX, FilePointer) ; i++)
+		{
+			if(fileline[strlen(fileline) - 1] == '\n')
+				fileline[strlen(fileline) - 1] = '\0';
+
+			printf("%u:\t%s\n", i, fileline);
+		}
+
+		/* Close file */
+		fclose(FilePointer);
+
+		if(WriteLog)
+			OutputLog('a', "Printed list of path.\n");
+		return 0;
+	}
+	else if(!strcmp(command, "add"))
+	{
+		/* Open file */
+		FilePointer = fopen(filename, "a");
+		if(!FilePointer)
+		{
+			if(WriteLog)
+				OutputLog('a', "Failed addition setting of path.\n");
+			return 1;
+		}
+
+		fprintf("%s\n", argument);
+
+		/* Close file */
+		fclose(FilePointer);
+
+		if(WriteLog)
+			OutputLog('a', "Additioned setting of path.\n");
+		return 0;
+	}
 }

@@ -143,4 +143,12 @@ int
 command_pause
 (void);
 
+int
+command_path
+(
+int,
+const char*,
+const char*
+);
+
 #endif
