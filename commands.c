@@ -350,9 +350,24 @@ int		CommandNumber,
 const char	*FileName
 )
 {
+	char	CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
+	int	r;
+
 	if(CommandNumber < 2)goto rfile_error;
-	
-	if(!remove(FileName))
+
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto rfile_error;
+
+	if(PathProcess(FileName, &result, sizeof(result)))
+		goto rfile_error;
+
+	if(chdir(result))goto rfile_error;
+
+	r = remove(FileName);
+
+	if(chdir(CurrentDirectory))goto rfile_error;
+
+	if(!r)
 	{
 		if(WriteLog)
 			OutputLog('a', "Removed a file \"%s\".\n", FileName);
@@ -407,9 +422,18 @@ const char	*to
 {
 	FILE	*FromFilePointer, *ToFilePointer;
 	BYTE	b;
+	char	CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 3)goto cpfile_error;
-	
+
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto cpfile_error;
+
+	if(PathProcess(from, &result, sizeof(result)))
+		goto cpfile_error;
+
+	if(chdir(result))goto cpfile_error;
+
 	/* Open file */
 	FromFilePointer = fopen(from, "rb");
 	ToFilePointer = fopen(to, "wb");
@@ -426,6 +450,8 @@ const char	*to
 	fclose(FromFilePointer);
 	fclose(ToFilePointer);
 	
+	if(chdir(CurrentDirectory))goto cpfile_error;
+
 	if(WriteLog)
 		OutputLog('a', "Copied file \"%s\" -> \"%s\".\n", from, to);
 	return 0;
@@ -530,10 +556,18 @@ const char	*FileName
 )
 {
 	FILE	*FilePointer;
-	char	FileLine[FILE_LINE_MAX];
+	char	FileLine[FILE_LINE_MAX], CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 2)goto tview_error;
 	
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto tview_error;
+
+	if(PathProcess(FileName, &result, sizeof(result)))
+		goto tview_error;
+
+	if(chdir(result))goto tview_error;
+
 	/* Open file */
 	FilePointer = fopen(FileName, "r");
 	if(!FilePointer)goto tview_error;
@@ -548,6 +582,8 @@ const char	*FileName
 	/* Close file */
 	fclose(FilePointer);
 	
+	if(chdir(CurrentDirectory))goto tview_error;
+
 	if(WriteLog)
 		OutputLog('a', "Printed contents of a text-file \"%s\".\n", FileName);
 	return 0;
@@ -594,9 +630,18 @@ const char	*FileName
 {
 	FILE	*FilePointer;
 	BYTE	b;
+	char	CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 2)goto bview_error;
 	
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto bview_error;
+
+	if(PathProcess(FileName, &result, sizeof(result)))
+		goto bview_error;
+
+	if(chdir(result))goto bview_error;
+
 	/* Open file */
 	FilePointer = fopen(FileName, "rb");
 	if(!FilePointer)goto bview_error;
@@ -612,6 +657,8 @@ const char	*FileName
 	
 	putchar('\n');
 	
+	if(chdir(CurrentDirectory))goto bview_error;
+
 	if(WriteLog)
 		OutputLog('a', "Printed contents of a binary-file \"%s\".\n", FileName);
 	return 0;
@@ -684,16 +731,26 @@ int		CommandNumber,
 const char	**commands
 )
 {
-	char	cmd[COMMAND_MAX] = "";
+	char	cmd[COMMAND_MAX] = "", CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	int	r;
 	
 	if(!system(NULL))goto app_error;
 	
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto app_error;
+
+	if(PathProcess(commands[1], &result, sizeof(result)))
+		goto app_error;
+
+	if(chdir(result))goto app_error;
+
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
 		sprintf(cmd, "%s %s", cmd, commands[i]);
 	
 	r = system(cmd);
 	
+	if(chdir(CurrentDirectory))goto app_error;
+
 	if(WriteLog)
 		OutputLog('a', "Executed a application \"%s\", Return value is %d.\n", commands[1], r);
 	return r;

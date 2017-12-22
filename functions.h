@@ -151,4 +151,12 @@ const char*,
 const char*
 );
 
+int
+PathProcess
+(
+const char*,
+char**,
+size_t
+);
+
 #endif

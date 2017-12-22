@@ -1,6 +1,7 @@
 /* Standard Libraries */
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 /* Header files */
 #include "macros.h"
@@ -42,9 +43,17 @@ const char	*filename
 )
 {
 	FILE	*FilePointer;
-	char	FileLine[FILE_LINE_MAX];
+	char	FileLine[FILE_LINE_MAX], CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 2)return 1;
+
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		return 1;
+
+	if(PathProcess(filename, &result, sizeof(result)))
+		return 1;
+
+	if(chdir(result))return 1;
 
 	/* Open file */
 	FilePointer = fopen(filename, "r");
@@ -65,6 +74,8 @@ const char	*filename
 
 	/* Close file */
 	fclose(FilePointer);
+
+	if(chdir(CurrentDirectory))return 1;
 
 	return 0;
 }
