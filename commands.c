@@ -572,7 +572,7 @@ const char	*FileName
 	FilePointer = fopen(FileName, "r");
 	if(!FilePointer)goto tview_error;
 	
-	for(unsigned int i = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; i++)
+	for(unsigned int i = 1 ; fgets(FileLine, sizeof(FileLine), FilePointer) ; i++)
 	{
 		if(FileLine[strlen(FileLine) - 1] == '\n')
 			FileLine[strlen(FileLine) - 1] = '\0';
@@ -1168,7 +1168,7 @@ const char	*argument
 			return 1;
 		}
 
-		for(unsigned int i = 1 ; fgets(fileline, FILE_LINE_MAX, FilePointer) ; i++)
+		for(unsigned int i = 1 ; fgets(fileline, sizeof(fileline), FilePointer) ; i++)
 		{
 			if(fileline[strlen(fileline) - 1] == '\n')
 				fileline[strlen(fileline) - 1] = '\0';
