@@ -26,6 +26,10 @@
  *  		type:		char*
  *  		description:	Pointer of result variable
  *
+ * -	size
+ *  		type:		size_t
+ *  		description:	Size of "result"
+ *
  * [Call from]
  * command_rfile function
  * command_cpfile function
@@ -67,9 +71,11 @@ size_t		size
 	}
 	else
 	{
+		if((strlen(RootDirectory) + strlen("PATH") + 1) > sizeof(PathFileName))
+			return 1;
+
 		sprintf(PathFileName, "%sPATH", RootDirectory);
 		
-		/* Open path file */
 		PathFilePointer = fopen(PathFileName, "r");
 		if(!PathFilePointer)return 1;
 
@@ -78,7 +84,7 @@ size_t		size
 			if(fileline[strlen(fileline) - 1] == '\n')
 				fileline[strlen(fileline) - 1] = '\0';
 
-			if((strlen(fileline) + sizeof(PATH_BREAK_CHARACTER) + strlen(filename)) > sizeof(TargetFileName))
+			if((strlen(fileline) + sizeof(PATH_BREAK_CHARACTER) + strlen(filename) + 1) > sizeof(TargetFileName))
 				return 1;
 
 			sprintf(TargetFileName, "%s%c%s", fileline, PATH_BREAK_CHARACTER, filename);
