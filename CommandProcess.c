@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-/* Header file */
+/* Header files */
 #include "macros.h"
 #include "functions.h"
 
@@ -48,13 +48,13 @@
 
 int
 CommandProcess
-(const char *command)
+(const char	*command)
 {
 	int	CommandNumber;
 	char	commands[COMMAND_NUMBER_MAX][COMMAND_MAX], format[FORMAT_MAX], *a[COMMAND_NUMBER_MAX];
 	
 	sprintf(format, "%%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us %%%us", COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX,
-			COMMAND_MAX, COMMAND_MAX, COMMAND_MAX,COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX);
+			COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX, COMMAND_MAX);
 	
 	CommandNumber = sscanf(command, format, commands[0], commands[1], commands[2], commands[3], commands[4], commands[5], commands[6], commands[7], commands[8], commands[9], commands[10], commands[11], commands[12],
 			commands[13], commands[14], commands[15], commands[16], commands[17], commands[18], commands[19], commands[20]);
