@@ -21,8 +21,8 @@
  *
  * [Arguments]
  * -	ExecutableFileName
- *  	type:		const char*
- *  	description:	Name of executable-file
+ *  		type:		const char*
+ *  		description:	Name of executable-file
  *
  * [Call from]
  * main function
@@ -38,8 +38,7 @@ int
 prepering
 (const char	*ExecutableFileName)
 {
-	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX],
-		SettingContent[SETTING_MAX], *r;
+	char	SettingFilePath[SETTING_FILE_PATH_MAX], *SettingFileLine, s[2], format[FORMAT_MAX], SettingName[SETTING_NAME_MAX], SettingContent[SETTING_MAX], *r;
 	FILE	*SettingFilePointer;
 	int	c;
 
@@ -47,6 +46,7 @@ prepering
 
 	r = strstr(RootDirectory, EXECUTABLE_FILE_NAME);
 	if(!r)return 1;
+	if(!strcmp(r, RootDirectory))return 1;
 
 	RootDirectory[(int)(r - RootDirectory)] = '\0';
 
@@ -54,26 +54,26 @@ prepering
 	
 	sprintf(SettingFilePath, "%sSETTING", RootDirectory);
 	
-	/* Open file */
 	SettingFilePointer = fopen(SettingFilePath, "r");
 	if(!SettingFilePointer)return 1;
 	
 	SettingFileLine = (char*)calloc(FILE_LINE_MAX, sizeof(char));
 	if(!SettingFileLine)return 1;
 	
+	sprintf(format, "%%%u[^=]=%%%us", SETTING_NAME_MAX, SETTING_MAX);
+
 	while(1)
 	{
 		while(1)
 		{
-			/* Read a character from setting file */
 			c = fgetc(SettingFilePointer);
 			if(c == '\n')break;
 			if(c == EOF)goto endread;
 			
-			/* Buffer >= FILE_LINE_MAX */
-			if((strlen(SettingFileLine) + 2) > FILE_LINE_MAX)
+			/* Size too large */
+			if((strlen(SettingFileLine) + sizeof(char) + 1) > FILE_LINE_MAX)
 			{
-				char	*temp = (char*)realloc(SettingFileLine, sizeof(char) * (strlen(SettingFileLine) + 2));
+				char	*temp = (char*)realloc(SettingFileLine, sizeof(char) * (strlen(SettingFileLine) + sizeof(char) + 1));
 				
 				if(!temp)return 1;
 				SettingFileLine = temp;
@@ -86,11 +86,15 @@ prepering
 			strcat(SettingFileLine, s);
 		}
 		
-		sprintf(format, "%%%u[^=]=%%%us", SETTING_NAME_MAX, SETTING_MAX);
 		sscanf(SettingFileLine, format, SettingName, SettingContent);
 		
 		if(!strcmp(SettingName, "prompt"))
+		{
+			if((strlen(SettingContent) + 1) > sizeof(prompt))
+				return 1;
+
 			strcpy(prompt, SettingContent);
+		}
 		else if(!strcmp(SettingName, "WriteLog"))
 		{
 			if(!strcmp(SettingContent, "true"))WriteLog = true;
@@ -104,10 +108,8 @@ prepering
 	
 endread:;
 	
-	/* Close file */
 	fclose(SettingFilePointer);
 	
-	/* Free memory */
 	free(SettingFileLine);
 	
 	return 0;
