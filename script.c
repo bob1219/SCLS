@@ -50,7 +50,7 @@ const char	*filename
 	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 		return 1;
 
-	if(PathProcess(filename, &result, sizeof(result)))
+	if(PathProcess(filename, result, sizeof(result)))
 		return 1;
 
 	if(chdir(result))return 1;

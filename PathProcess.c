@@ -23,7 +23,7 @@
  *  		description:	Name of file
  *
  * -	result
- *  		type:		char**
+ *  		type:		char*
  *  		description:	Pointer of result variable
  *
  * [Call from]
@@ -42,7 +42,7 @@ int
 PathProcess
 (
 const char	*filename,
-char		**result,
+char		*result,
 size_t		size
 )
 {
@@ -62,7 +62,7 @@ size_t		size
 		if((strlen(".") + 1) > size)
 			return 1;
 
-		strcpy(*result, ".");
+		strcpy(result, ".");
 		return 0;
 	}
 	else
@@ -92,8 +92,8 @@ size_t		size
 				if((strlen(fileline) + 1) > size)
 					return 1;
 
-				strcpy(*result, fileline);
-				return 0:
+				strcpy(result, fileline);
+				return 0;
 			}
 		}
 

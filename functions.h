@@ -155,7 +155,7 @@ int
 PathProcess
 (
 const char*,
-char**,
+char*,
 size_t
 );
 

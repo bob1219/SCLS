@@ -355,19 +355,7 @@ const char	*FileName
 
 	if(CommandNumber < 2)goto rfile_error;
 
-	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
-		goto rfile_error;
-
-	if(PathProcess(FileName, &result, sizeof(result)))
-		goto rfile_error;
-
-	if(chdir(result))goto rfile_error;
-
-	r = remove(FileName);
-
-	if(chdir(CurrentDirectory))goto rfile_error;
-
-	if(!r)
+	if(!remove(FileName))
 	{
 		if(WriteLog)
 			OutputLog('a', "Removed a file \"%s\".\n", FileName);
@@ -429,7 +417,7 @@ const char	*to
 	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 		goto cpfile_error;
 
-	if(PathProcess(from, &result, sizeof(result)))
+	if(PathProcess(from, result, sizeof(result)))
 		goto cpfile_error;
 
 	if(chdir(result))goto cpfile_error;
@@ -563,7 +551,7 @@ const char	*FileName
 	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 		goto tview_error;
 
-	if(PathProcess(FileName, &result, sizeof(result)))
+	if(PathProcess(FileName, result, sizeof(result)))
 		goto tview_error;
 
 	if(chdir(result))goto tview_error;
@@ -610,7 +598,7 @@ tview_error:;
  *		type:		int
  *		description:	Number of command
  *
- * -	FileName
+ * -	FileName 
  *		type:		const char*
  *		description:	Name of file
  *
@@ -637,7 +625,7 @@ const char	*FileName
 	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 		goto bview_error;
 
-	if(PathProcess(FileName, &result, sizeof(result)))
+	if(PathProcess(FileName, result, sizeof(result)))
 		goto bview_error;
 
 	if(chdir(result))goto bview_error;
@@ -739,13 +727,28 @@ const char	**commands
 	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 		goto app_error;
 
-	if(PathProcess(commands[1], &result, sizeof(result)))
+	if(PathProcess(commands[1], result, sizeof(result)))
 		goto app_error;
 
 	if(chdir(result))goto app_error;
 
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
-		sprintf(cmd, "%s %s", cmd, commands[i]);
+	{
+		if(i == 1)
+		{
+			if((strlen(commands[i]) + 1) > sizeof(cmd))
+				return 1;
+
+			strcpy(cmd, commands[i]);
+		}
+		else
+		{
+			if((strlen(cmd) + strlen(" ") + strlen(commands[i]) + 1) > sizeof(cmd))
+				return 1;
+
+			sprintf(cmd, "%s %s", cmd, commands[i]);
+		}
+	}
 	
 	r = system(cmd);
 	
@@ -1194,7 +1197,7 @@ const char	*argument
 			return 1;
 		}
 
-		fprintf("%s\n", argument);
+		fprintf(FilePointer, "%s\n", argument);
 
 		/* Close file */
 		fclose(FilePointer);
