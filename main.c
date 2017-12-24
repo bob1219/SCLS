@@ -46,12 +46,12 @@ char	**argv
 	{
 		if(!script(argc, argv[1]))
 		{
-			printf("Succeeded script.\n");
+			printf("Succeeded run script.\n");
 			return EXIT_SUCCESS;
 		}
 		else
 		{
-			fprintf(stderr, "Failed script.\n");
+			fprintf(stderr, "Failed run script.\n");
 			return EXIT_FAILURE;
 		}
 	}
