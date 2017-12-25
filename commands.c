@@ -245,7 +245,7 @@ command_cudir
 {
 	char	CurrentDirectory[FILENAME_MAX];
 	
-	if(!getcwd(CurrentDirectory, FILENAME_MAX))
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 	{
 		if(WriteLog)
 			OutputLog('a', "Failed get current directory.\n");
@@ -299,11 +299,16 @@ const char	*FileName
 	
 	if(CommandNumber < 2)goto mfile_error;
 	
-	/* Open file */
+	FilePointer = fopen(FileName, "rb");
+	if(FilePointer)
+	{
+		fclose(FilePointer);
+		return 1;
+	}
+
 	FilePointer = fopen(FileName, "w");
 	if(!FilePointer)goto mfile_error;
 	
-	/* Close file */
 	fclose(FilePointer);
 	
 	if(WriteLog)
@@ -350,9 +355,6 @@ int		CommandNumber,
 const char	*FileName
 )
 {
-	char	CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
-	int	r;
-
 	if(CommandNumber < 2)goto rfile_error;
 
 	if(!remove(FileName))
@@ -422,7 +424,6 @@ const char	*to
 
 	if(chdir(result))goto cpfile_error;
 
-	/* Open file */
 	FromFilePointer = fopen(from, "rb");
 	ToFilePointer = fopen(to, "wb");
 	if((!FromFilePointer) || (!ToFilePointer))
@@ -434,7 +435,6 @@ const char	*to
 		if(fwrite(&b, sizeof(BYTE), 1, ToFilePointer) != 1)break;
 	}
 	
-	/* Close file */
 	fclose(FromFilePointer);
 	fclose(ToFilePointer);
 	
@@ -489,14 +489,12 @@ const char	*DirectoryName
 	
 	if(CommandNumber < 2)goto lfile_error;
 	
-	/* Open directory */
 	DirectoryPointer = opendir(DirectoryName);
 	if(!DirectoryPointer)goto lfile_error;
 	
 	while(directory = readdir(DirectoryPointer))
 		printf("%s\n", directory -> d_name);
 	
-	/* Close directory */
 	closedir(DirectoryPointer);
 	
 	if(WriteLog)
@@ -556,7 +554,6 @@ const char	*FileName
 
 	if(chdir(result))goto tview_error;
 
-	/* Open file */
 	FilePointer = fopen(FileName, "r");
 	if(!FilePointer)goto tview_error;
 	
@@ -567,7 +564,6 @@ const char	*FileName
 		printf("%u:\t%s\n", i, FileLine);
 	}
 	
-	/* Close file */
 	fclose(FilePointer);
 	
 	if(chdir(CurrentDirectory))goto tview_error;
@@ -630,17 +626,15 @@ const char	*FileName
 
 	if(chdir(result))goto bview_error;
 
-	/* Open file */
 	FilePointer = fopen(FileName, "rb");
 	if(!FilePointer)goto bview_error;
 	
-	for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
+	for(unsigned int i = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
 	{
 		if(a != 1)putchar('-');
 		printf("%02X", b);
 	}
 	
-	/* Close file */
 	fclose(FilePointer);
 	
 	putchar('\n');
@@ -719,7 +713,7 @@ int		CommandNumber,
 const char	**commands
 )
 {
-	char	cmd[COMMAND_MAX] = "", CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
+	char	cmd[COMMAND_MAX], CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	int	r;
 	
 	if(!system(NULL))goto app_error;
@@ -1137,33 +1131,31 @@ const char	*argument
 )
 {
 	FILE	*FilePointer;
-	char	filename[FILENAME_MAX];
+	char	PathFileName[FILENAME_MAX];
 
-	sprintf(filename, "%sPATH", RootDirectory);
+	sprintf(PathFileName, "%sPATH", RootDirectory);
 
 	if(!strcmp(command, "clear"))
 	{
-		FilePointer = fopen(filename, "w");
-		if(!FilePointer)
+		FilePointer = fopen(PathFileName, "w");
+		if(FilePointer)
 		{
 			if(WriteLog)
-				OutputLog('a', "Failed clear path setting file.\n");
-			return 1;
+				OutputLog('a', "Cleared path file.\n");
+			return 0;
 		}
 		else
 		{
-			fclose(FilePointer);
 			if(WriteLog)
-				OutputLog('a', "Cleared path setting file.\n");
-			return 0;
+				OutputLog('a', "Failed clear path file.\n");
+			return 1;
 		}
 	}
 	else if(!strcmp(command, "list"))
 	{
 		char	fileline[FILE_LINE_MAX];
 
-		/* Open file */
-		FilePointer = fopen(filename, "r");
+		FilePointer = fopen(PathFileName, "r");
 		if(!FilePointer)
 		{
 			if(WriteLog)
@@ -1179,7 +1171,6 @@ const char	*argument
 			printf("%u:\t%s\n", i, fileline);
 		}
 
-		/* Close file */
 		fclose(FilePointer);
 
 		if(WriteLog)
@@ -1188,8 +1179,7 @@ const char	*argument
 	}
 	else if(!strcmp(command, "add"))
 	{
-		/* Open file */
-		FilePointer = fopen(filename, "a");
+		FilePointer = fopen(PathFileName, "a");
 		if(!FilePointer)
 		{
 			if(WriteLog)
@@ -1199,7 +1189,6 @@ const char	*argument
 
 		fprintf(FilePointer, "%s\n", argument);
 
-		/* Close file */
 		fclose(FilePointer);
 
 		if(WriteLog)
