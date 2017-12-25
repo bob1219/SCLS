@@ -245,7 +245,7 @@ command_cudir
 {
 	char	CurrentDirectory[FILENAME_MAX];
 	
-	if(!getcwd(CurrentDirectory, FILENAME_MAX))
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
 	{
 		if(WriteLog)
 			OutputLog('a', "Failed get current directory.\n");
@@ -299,11 +299,16 @@ const char	*FileName
 	
 	if(CommandNumber < 2)goto mfile_error;
 	
-	/* Open file */
+	FilePointer = fopen(FileName, "rb");
+	if(FilePointer)
+	{
+		fclose(FilePointer);
+		return 1;
+	}
+
 	FilePointer = fopen(FileName, "w");
 	if(!FilePointer)goto mfile_error;
 	
-	/* Close file */
 	fclose(FilePointer);
 	
 	if(WriteLog)
@@ -351,7 +356,7 @@ const char	*FileName
 )
 {
 	if(CommandNumber < 2)goto rfile_error;
-	
+
 	if(!remove(FileName))
 	{
 		if(WriteLog)
@@ -407,10 +412,18 @@ const char	*to
 {
 	FILE	*FromFilePointer, *ToFilePointer;
 	BYTE	b;
+	char	CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 3)goto cpfile_error;
-	
-	/* Open file */
+
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto cpfile_error;
+
+	if(PathProcess(from, result, sizeof(result)))
+		goto cpfile_error;
+
+	if(chdir(result))goto cpfile_error;
+
 	FromFilePointer = fopen(from, "rb");
 	ToFilePointer = fopen(to, "wb");
 	if((!FromFilePointer) || (!ToFilePointer))
@@ -422,10 +435,11 @@ const char	*to
 		if(fwrite(&b, sizeof(BYTE), 1, ToFilePointer) != 1)break;
 	}
 	
-	/* Close file */
 	fclose(FromFilePointer);
 	fclose(ToFilePointer);
 	
+	if(chdir(CurrentDirectory))goto cpfile_error;
+
 	if(WriteLog)
 		OutputLog('a', "Copied file \"%s\" -> \"%s\".\n", from, to);
 	return 0;
@@ -475,14 +489,12 @@ const char	*DirectoryName
 	
 	if(CommandNumber < 2)goto lfile_error;
 	
-	/* Open directory */
 	DirectoryPointer = opendir(DirectoryName);
 	if(!DirectoryPointer)goto lfile_error;
 	
 	while(directory = readdir(DirectoryPointer))
 		printf("%s\n", directory -> d_name);
 	
-	/* Close directory */
 	closedir(DirectoryPointer);
 	
 	if(WriteLog)
@@ -530,24 +542,32 @@ const char	*FileName
 )
 {
 	FILE	*FilePointer;
-	char	FileLine[FILE_LINE_MAX];
+	char	FileLine[FILE_LINE_MAX], CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 2)goto tview_error;
 	
-	/* Open file */
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto tview_error;
+
+	if(PathProcess(FileName, result, sizeof(result)))
+		goto tview_error;
+
+	if(chdir(result))goto tview_error;
+
 	FilePointer = fopen(FileName, "r");
 	if(!FilePointer)goto tview_error;
 	
-	for(unsigned int i = 1 ; fgets(FileLine, FILE_LINE_MAX, FilePointer) ; i++)
+	for(unsigned int i = 1 ; fgets(FileLine, sizeof(FileLine), FilePointer) ; i++)
 	{
 		if(FileLine[strlen(FileLine) - 1] == '\n')
 			FileLine[strlen(FileLine) - 1] = '\0';
 		printf("%u:\t%s\n", i, FileLine);
 	}
 	
-	/* Close file */
 	fclose(FilePointer);
 	
+	if(chdir(CurrentDirectory))goto tview_error;
+
 	if(WriteLog)
 		OutputLog('a', "Printed contents of a text-file \"%s\".\n", FileName);
 	return 0;
@@ -574,7 +594,7 @@ tview_error:;
  *		type:		int
  *		description:	Number of command
  *
- * -	FileName
+ * -	FileName 
  *		type:		const char*
  *		description:	Name of file
  *
@@ -594,24 +614,33 @@ const char	*FileName
 {
 	FILE	*FilePointer;
 	BYTE	b;
+	char	CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	
 	if(CommandNumber < 2)goto bview_error;
 	
-	/* Open file */
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto bview_error;
+
+	if(PathProcess(FileName, result, sizeof(result)))
+		goto bview_error;
+
+	if(chdir(result))goto bview_error;
+
 	FilePointer = fopen(FileName, "rb");
 	if(!FilePointer)goto bview_error;
 	
-	for(unsigned int a = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
+	for(unsigned int i = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; i++)
 	{
-		if(a != 1)putchar('-');
+		if(i != 1)putchar('-');
 		printf("%02X", b);
 	}
 	
-	/* Close file */
 	fclose(FilePointer);
 	
 	putchar('\n');
 	
+	if(chdir(CurrentDirectory))goto bview_error;
+
 	if(WriteLog)
 		OutputLog('a', "Printed contents of a binary-file \"%s\".\n", FileName);
 	return 0;
@@ -684,16 +713,41 @@ int		CommandNumber,
 const char	**commands
 )
 {
-	char	cmd[COMMAND_MAX] = "";
+	char	cmd[COMMAND_MAX], CurrentDirectory[FILENAME_MAX], result[FILENAME_MAX];
 	int	r;
 	
 	if(!system(NULL))goto app_error;
 	
+	if(!getcwd(CurrentDirectory, sizeof(CurrentDirectory)))
+		goto app_error;
+
+	if(PathProcess(commands[1], result, sizeof(result)))
+		goto app_error;
+
+	if(chdir(result))goto app_error;
+
 	for(unsigned int i = 1 ; i < CommandNumber ; i++)
-		sprintf(cmd, "%s %s", cmd, commands[i]);
+	{
+		if(i == 1)
+		{
+			if((strlen(commands[i]) + 1) > sizeof(cmd))
+				return 1;
+
+			strcpy(cmd, commands[i]);
+		}
+		else
+		{
+			if((strlen(cmd) + strlen(" ") + strlen(commands[i]) + 1) > sizeof(cmd))
+				return 1;
+
+			sprintf(cmd, "%s %s", cmd, commands[i]);
+		}
+	}
 	
 	r = system(cmd);
 	
+	if(chdir(CurrentDirectory))goto app_error;
+
 	if(WriteLog)
 		OutputLog('a', "Executed a application \"%s\", Return value is %d.\n", commands[1], r);
 	return r;
@@ -1004,7 +1058,7 @@ const char	**commands
 
 	printf("%s\n", text);
 
-	return 0;	
+	return 0;
 }
 
 /*
@@ -1035,4 +1089,110 @@ command_pause
 	getchar();
 
 	return 0;
+}
+
+/*
+ * command_path
+ *
+ * [Description]
+ * Setting path
+ *
+ * [Return value]
+ * type:	int
+ * success:	0
+ * failure:	1
+ *
+ * [Arguments]
+ * -	CommandNumber
+ *  	type:		int
+ *  	description:	Number of command
+ *
+ * -	command
+ *  	type:		const char*
+ *  	description:	Command of path
+ *
+ * -	argument
+ *  	type:		const char*
+ *  	description:	Argument of path
+ *
+ * [Call from]
+ * CommandProcess function
+ *
+ * [Call to]
+ * OutputLog function
+ */
+
+int
+command_path
+(
+int		CommandNumber,
+const char	*command,
+const char	*argument
+)
+{
+	FILE	*FilePointer;
+	char	PathFileName[FILENAME_MAX];
+
+	sprintf(PathFileName, "%sPATH", RootDirectory);
+
+	if(!strcmp(command, "clear"))
+	{
+		FilePointer = fopen(PathFileName, "w");
+		if(FilePointer)
+		{
+			if(WriteLog)
+				OutputLog('a', "Cleared path file.\n");
+			return 0;
+		}
+		else
+		{
+			if(WriteLog)
+				OutputLog('a', "Failed clear path file.\n");
+			return 1;
+		}
+	}
+	else if(!strcmp(command, "list"))
+	{
+		char	fileline[FILE_LINE_MAX];
+
+		FilePointer = fopen(PathFileName, "r");
+		if(!FilePointer)
+		{
+			if(WriteLog)
+				OutputLog('a', "Failed print list of path.\n");
+			return 1;
+		}
+
+		for(unsigned int i = 1 ; fgets(fileline, sizeof(fileline), FilePointer) ; i++)
+		{
+			if(fileline[strlen(fileline) - 1] == '\n')
+				fileline[strlen(fileline) - 1] = '\0';
+
+			printf("%u:\t%s\n", i, fileline);
+		}
+
+		fclose(FilePointer);
+
+		if(WriteLog)
+			OutputLog('a', "Printed list of path.\n");
+		return 0;
+	}
+	else if(!strcmp(command, "add"))
+	{
+		FilePointer = fopen(PathFileName, "a");
+		if(!FilePointer)
+		{
+			if(WriteLog)
+				OutputLog('a', "Failed addition setting of path.\n");
+			return 1;
+		}
+
+		fprintf(FilePointer, "%s\n", argument);
+
+		fclose(FilePointer);
+
+		if(WriteLog)
+			OutputLog('a', "Additioned setting of path.\n");
+		return 0;
+	}
 }

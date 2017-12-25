@@ -39,7 +39,7 @@ CommandLine
 	{
 		printf("%s", prompt);
 		
-		if(!fgets(command, COMMAND_MAX, stdin))
+		if(!fgets(command, sizeof(command), stdin))
 		{
 			fprintf(stderr, "Failed input.\n");
 			abort();

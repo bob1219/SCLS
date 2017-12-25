@@ -45,15 +45,8 @@ char	**argv
 	if(argc > 1)
 	{
 		if(!script(argc, argv[1]))
-		{
-			printf("Succeeded script.\n");
 			return EXIT_SUCCESS;
-		}
-		else
-		{
-			fprintf(stderr, "Failed script.\n");
-			return EXIT_FAILURE;
-		}
+		else return EXIT_FAILURE;
 	}
 	
 	welcome();
