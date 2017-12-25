@@ -90,6 +90,10 @@ Pause
 Run a script  
 `script [file-name]`  
 
+* path  
+Setting path  
+`path [command] <argument>`  
+
 files and directories
 ---------------------
 * logs/  
@@ -143,6 +147,12 @@ Source file
 * script.c  
 Source file  
 
+* PATH  
+Path setting file  
+
+* PathProcess.c  
+Source file  
+
 History
 --------
 * Version 1.0 (December 16th, 2017)  
@@ -166,3 +176,6 @@ History
 * Version 2.1 (December 20th, 2017)  
 	* Bugfix prepering function
 	* Bugfix CommandProcess function
+
+* Version 3.0 (December 25th, 2017)  
+	* Addition path command

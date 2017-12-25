@@ -1,7 +1,6 @@
 #ifndef	MACROS_H
 #define	MACROS_H
 
-#define PATH_BREAK_CHARACTER	'\\'
 #define SETTING_FILE_PATH_MAX	10
 #define FILE_LINE_MAX		10000
 #define FORMAT_MAX		61
@@ -16,4 +15,10 @@
 #define TEXT_MAX		COMMAND_MAX
 #define EXECUTABLE_FILE_NAME	"scls.exe"
 
-#endif
+#if defined(_WIN32) || defined(_WIN64) || defined(_WINDOWS) || defined(_CONSOLE)
+	#define PATH_BREAK_CHARACTER	'\\'
+#else
+	#define PATH_BREAK_CHARACTER	'/'
+#endif /* #if defined(_WIN32) || ... */
+
+#endif /* #ifndef MACROS_H */

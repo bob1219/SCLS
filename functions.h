@@ -143,4 +143,20 @@ int
 command_pause
 (void);
 
+int
+command_path
+(
+int,
+const char*,
+const char*
+);
+
+int
+PathProcess
+(
+const char*,
+char*,
+size_t
+);
+
 #endif
