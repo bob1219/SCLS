@@ -629,9 +629,9 @@ const char	*FileName
 	FilePointer = fopen(FileName, "rb");
 	if(!FilePointer)goto bview_error;
 	
-	for(unsigned int i = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; a++)
+	for(unsigned int i = 1 ; fread(&b, sizeof(BYTE), 1, FilePointer) ; i++)
 	{
-		if(a != 1)putchar('-');
+		if(i != 1)putchar('-');
 		printf("%02X", b);
 	}
 	
